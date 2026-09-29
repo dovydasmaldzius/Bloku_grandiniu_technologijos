@@ -10,10 +10,21 @@ Programos tobulinimui naudoti DI įrankiai: ChatGPT; Google GEMINI (nemokamos ve
 
 1 eksperimentas (įvestys): 
 
+Pateikiu excel lentelę su tikrintais failais (kas juos sudarė ir kokie gavosi hash). "Random" visus failus pakeičiau taip: pirmame pakeičiau pirmąjį simbolį, antrame pakeičiau paskutinįjį simbolį, trečiame pridėjau tarpą viduryje teksto.
+
+Pirmi du "random" >1000 baitų failai turi tik ascii simbolius, trečiasis turi ir kitokių (kurie užima daugiau nei 1 baitą atminties).
+P.S. visus tris failus atsitiktinai generavo DI įrankis ChatGPT.
+
 <img width="788" height="355" alt="image" src="https://github.com/user-attachments/assets/86f9b226-e460-405b-a7e3-2b131d2488f2" />
-
-
-1 eksperimentas (kodas, patobulintas DI) (įvestys):
+<img width="670" height="283" alt="image" src="https://github.com/user-attachments/assets/66ffe6d3-50a7-4223-aff9-48a7d12d509e" />
+<img width="780" height="347" alt="image" src="https://github.com/user-attachments/assets/d7e49e53-5a8d-4893-8d0d-9f85bf2ab054" />
+<img width="657" height="310" alt="image" src="https://github.com/user-attachments/assets/5b7635ab-f670-4826-aa22-97b89138f03c" />
+<img width="677" height="302" alt="image" src="https://github.com/user-attachments/assets/1f36d32f-5b8e-4da4-b02d-e2589622f9cd" />
+<img width="673" height="272" alt="image" src="https://github.com/user-attachments/assets/92db6403-8ff6-4c87-80f9-f39e983eeb46" />
+<img width="662" height="250" alt="image" src="https://github.com/user-attachments/assets/310489cb-7524-4ad9-a252-3dba94781970" />
+<img width="688" height="235" alt="image" src="https://github.com/user-attachments/assets/8906615d-94bc-4f03-859d-b9ad7e7b3306" />
+<img width="637" height="202" alt="image" src="https://github.com/user-attachments/assets/49cc1f7a-01b2-43e1-a95b-363c981debad" />
+<img width="1402" height="282" alt="image" src="https://github.com/user-attachments/assets/361c5e63-6c12-4523-a1d2-00aee304a05d" />
 
 2 eksperimentas (išvestis):
 
