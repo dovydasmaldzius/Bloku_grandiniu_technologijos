@@ -50,7 +50,13 @@ Matome, kad išvestis gavosi lygiai tokia pati.
 
 3 eksperimentas (determinizmas):
 
-3 eksperimentas (kodas, patobulintas DI) (determinizmas):
+<img width="712" height="362" alt="image" src="https://github.com/user-attachments/assets/503602ef-1f70-4d9c-8f0c-24c77f29f62c" />
+
+Matome, kad du kartus įvedus tą patį žodį, išvestis gaunasi tokia pati. o čia įrodymas, kad paleidus programą iš naujo ir įvedus tą patį žodį vistiek gaunama ta pati išvestis:
+
+<img width="788" height="338" alt="image" src="https://github.com/user-attachments/assets/f23dfe07-073e-4928-a334-bbacb4b249d8" />
+
+
 
 4 eksperimentas (efektyvumas):
 
