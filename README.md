@@ -8,6 +8,7 @@ Programos pseudokodas:
 
 Programos tobulinimui naudoti DI įrankiai: ChatGPT; Google GEMINI (nemokamos versijos).
 
+
 1 eksperimentas (įvestys): 
 
 Pateikiu excel lentelę su tikrintais failais (kas juos sudarė ir kokie gavosi hash). "Random" visus failus pakeičiau taip: pirmame pakeičiau pirmąjį simbolį, antrame pakeičiau paskutinįjį simbolį, trečiame pridėjau tarpą viduryje teksto.
@@ -25,6 +26,10 @@ P.S. visus tris failus atsitiktinai generavo DI įrankis ChatGPT.
 <img width="688" height="235" alt="image" src="https://github.com/user-attachments/assets/8906615d-94bc-4f03-859d-b9ad7e7b3306" />
 <img width="637" height="202" alt="image" src="https://github.com/user-attachments/assets/49cc1f7a-01b2-43e1-a95b-363c981debad" />
 <img width="1402" height="282" alt="image" src="https://github.com/user-attachments/assets/361c5e63-6c12-4523-a1d2-00aee304a05d" />
+
+Pastebėtina, jog pasikeitus vos vienam simboliui arba atsirandant papildomam tarpui visiškai pasikeičia gautas hash.
+
+
 
 2 eksperimentas (išvestis):
 
