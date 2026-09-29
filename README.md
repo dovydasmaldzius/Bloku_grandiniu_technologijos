@@ -60,7 +60,8 @@ Programa taip pat išveda tą patį hash'ą, jei įvestyje tą patį tekstą įv
 
 <img width="665" height="420" alt="image" src="https://github.com/user-attachments/assets/4efd8ab8-2b61-428b-b030-cb058bd29a7e" />
 
-kaip matome, naujaszodis įvesties gautas hash yra visiškai tas pats, nors tarp įvedimų įrašėme ir visiškai kitą reikšmę.
+Kaip matome, naujaszodis įvesties gautas hash yra visiškai tas pats, nors tarp įvedimų įrašėme ir visiškai kitą reikšmę.
+
 4 eksperimentas (efektyvumas):
 
 4 eksperimentas (kodas, patobulintas DI) (efektyvumas):
