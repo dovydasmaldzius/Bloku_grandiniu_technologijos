@@ -33,6 +33,14 @@ Pastebėtina, jog pasikeitus vos vienam simboliui arba atsirandant papildomam ta
 
 2 eksperimentas (išvestis):
 
+Iš paveikslėlių pirmajame teste matosi, kad kiekvienas gautas hash turi lygiai 64 hex simbolius.
+Programa taip pat duoda vienodą rezultatą (hash'ą), jei taip pat parašytas vienodų simbolių rinkinys yra rašomas ranka arba skaitomas iš failo.
+Įrodymas (tarkime, tekstas yra abc.
+<img width="326" height="106" alt="image" src="https://github.com/user-attachments/assets/bb57e658-65b1-491e-8f87-a53408321fc1" />
+<img width="786" height="487" alt="image" src="https://github.com/user-attachments/assets/26975daa-be32-4e56-b851-d6b8118dabd8" />
+Matome, kad išvestis gavosi lygiai tokia pati.
+
+
 2 eksperimentas (kodas, patobulintas DI) (išvestis):
 
 3 eksperimentas (determinizmas):
