@@ -80,6 +80,6 @@ Kaip matome, naujaszodis įvesties gautas hash yra visiškai tas pats, nors tarp
 
 8 eksperimentas (išvados):
 
-8 eksperimentas (išvados):
+Šis eksperimentas yra daugiausia aprašytas readme failo pradžioje, tai yra, ten įkėliau programos veikimo principą, pseudokodą ir paleidimo instrukciją.
 
 Papildoma užduotis (kodo lyginimas su MD5, SHA-1, SHA-256:
