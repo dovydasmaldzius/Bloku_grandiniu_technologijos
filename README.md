@@ -56,8 +56,11 @@ Matome, kad du kartus įvedus tą patį žodį, išvestis gaunasi tokia pati. o 
 
 <img width="788" height="338" alt="image" src="https://github.com/user-attachments/assets/f23dfe07-073e-4928-a334-bbacb4b249d8" />
 
+Programa taip pat išveda tą patį hash'ą, jei įvestyje tą patį tekstą įvedame ne iš eilės:
 
+<img width="665" height="420" alt="image" src="https://github.com/user-attachments/assets/4efd8ab8-2b61-428b-b030-cb058bd29a7e" />
 
+kaip matome, naujaszodis įvesties gautas hash yra visiškai tas pats, nors tarp įvedimų įrašėme ir visiškai kitą reikšmę.
 4 eksperimentas (efektyvumas):
 
 4 eksperimentas (kodas, patobulintas DI) (efektyvumas):
