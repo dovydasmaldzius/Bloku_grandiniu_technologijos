@@ -10,6 +10,7 @@ Programos pseudokodas:
 
 Programos tobulinimui naudoti DI įrankiai: ChatGPT; Google GEMINI (nemokamos versijos).
 
+P.S. visi eksperimentai išliko tokie patys ir DI patobulintoje versijoje, tad kiekvienas eksperimentas buvo taikytas bendrai galutinei šios užduoties galutinei versijai.
 
 1 eksperimentas (įvestys): 
 
@@ -64,19 +65,11 @@ Kaip matome, naujaszodis įvesties gautas hash yra visiškai tas pats, nors tarp
 
 4 eksperimentas (efektyvumas):
 
-4 eksperimentas (kodas, patobulintas DI) (efektyvumas):
-
 5 eksperimentas (kolizijos):
-
-5 eksperimentas (kodas, patobulintas DI) (kolizijos):
 
 6 eksperimentas (lavinos efektas):
 
-6 eksperimentas (kodas, patobulintas DI) (lavinos efektas):
-
 7 eksperimentas (spėjimas, vieša druska ir slaptas atsitiktinumas):
-
-7 eksperimentas (kodas, patobulintas DI) (spėjimas, vieša druska ir slaptas atsitiktinumas):
 
 8 eksperimentas (išvados):
 
