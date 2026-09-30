@@ -76,7 +76,11 @@ Grafikas (pastaba - grafiką sukūrė Google Gemini dirbtinio intelekto įrankis
 
 Kaip matome iš gautos išvesties, kuo daugiau baitų apdorojo ("hash'avo") programa, tuo ilgiau ji užtruko, taip pat, matome, kad kreivė pastoviai kyla į viršų, tad keistų anomalijų ar nesutapimų šiame programos eksperimente nebuvo rasta.
 
-5 eksperimentas (kolizijos):
+5 eksperimentas (kodas rašytas su DI pagalba) (kolizijos):
+
+<img width="852" height="727" alt="image" src="https://github.com/user-attachments/assets/f4f3b128-ff5b-406b-87e4-7a14c52f106e" />
+
+Kaip matome, nebuvo rasta nei vienos kolizijos, nes to šansas yra itin mažas: Kai yra "hash'uojama" skirtinga įvestis šansas to, kad kažkuri viena pora turės tokį patį "hash'ą", pagal formulę, yra 2^-256, o skirtingų porų, kai eilučių yra 200000 (100000 porų = 100000 * 2 eilučių), pagal formulę, yra 200000 * (200000-1)/2 = 19 999 900 000, o tai yra labai mažas skaičius lyginant su 2^256.
 
 6 eksperimentas (lavinos efektas):
 
