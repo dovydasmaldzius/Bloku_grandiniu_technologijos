@@ -8,7 +8,7 @@ Programos veikimo principas: vartotojas pasirenka: įvesti tekstą arba nuskaity
 
 *Kaip vyksta hash'avimo funkcija: vartotojo įvestas/nuskaitytas tekstas yra skaitomas po vieną simbolį, kiekvienas simbolis yra paverčiamas į jo skaitinę baito reikšmę (jei yra naudojamas ASCII simbolis - tada į ASCII kodą). Toliau kiekvienam simboliui pagal formulę yra atnaujinami 8 hash'ai (skaitinės reikšmės) ir toliau iš eilės skaitomi kiti simboliai (tarpas irgi yra simbolis), ir kiekvienas naujas simbolis toliau keičia ankstesnę hash reikšmę, kol yra nuskaitomas visas tekstas. Pabaigoje, prieš išvedant hash'ą, jis yra paverčiamas į šešioliktainę sistemą (kadangi iš viso yra 8 hash'ai - kiekvienas jų sudaro 32 bitus ir bendroje sumoje gaunasi 256 bitai. Šie bitai vėliau yra paverčiami į šešioliktainę skaičiavimo sistemą (32 bitams užrašyti naudojami 8 hex skaitmenys) ir taip gaunasi 64 hex skaitmenys).
 
-Programos pseudokodas: 
+Programos pseudokodas: pradžia -> naudotojas pasirenka, ar įvesti tekstą ar nuskaityti iš failo -> (jeigu pasirankamas įvedimo variantas, naudotojas įveda tekstą ir spaudžia enter -> programa pateikia hash'ą -> programa paprašo vėl įvesti tekstą arba baigti darbą) -> (jeigu pasirenkamas nuskaitymo variantas, programa skaito tekstą iš failo ir pateikia jo hash'ą) -> pabaiga.
 
 Programos tobulinimui naudoti DI įrankiai: ChatGPT; Google GEMINI, Copilot (nemokamos versijos).
 
