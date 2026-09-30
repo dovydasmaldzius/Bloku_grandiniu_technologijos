@@ -10,7 +10,7 @@ Programos pseudokodas:
 
 Programos tobulinimui naudoti DI įrankiai: ChatGPT; Google GEMINI (nemokamos versijos).
 
-P.S. visi eksperimentai išliko tokie patys ir DI patobulintoje versijoje, tad kiekvienas eksperimentas buvo taikytas bendrai galutinei šios užduoties galutinei versijai.
+P.S. eksperimentai 1-3 buvo atlikti be DI pagalbos rašytame kode, o eksperimentams 4-7 buvo naudojama DI pagalba kodo rašymui.
 
 1 eksperimentas (įvestys): 
 
