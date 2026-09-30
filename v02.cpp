@@ -541,6 +541,125 @@ void Eksperimentas6() {
          << "testuose tikrina kita funkcijos savybe.\n";
 }
 
+void Eksperimentas7() {
+    const size_t kandidatuKiekis = 10000;
+    const size_t druskosIlgis = 16;
+    random_device randomDevice;
+    uniform_int_distribution<int> baitoDist(0, 255);
+
+    auto generuotiAtsitiktinuma = [&]() {
+        string atsitiktinumas;
+        atsitiktinumas.reserve(druskosIlgis);
+        for (size_t i = 0; i < druskosIlgis; ++i) {
+            atsitiktinumas.push_back(static_cast<char>(baitoDist(randomDevice)));
+        }
+        return atsitiktinumas;
+    };
+
+    auto spausdintiHash = [](const uint32_t hash[8]) {
+        cout << hex << setfill('0');
+        for (int i = 0; i < 8; ++i) {
+            cout << setw(8) << hash[i];
+        }
+        cout << dec << setfill(' ');
+    };
+
+    auto spausdintiHex = [](const string& baitai) {
+        cout << hex << setfill('0');
+        for (unsigned char baitas : baitai) {
+            cout << setw(2) << static_cast<unsigned int>(baitas);
+        }
+        cout << dec << setfill(' ');
+    };
+
+    auto vykdytiPaieska = [&](const uint32_t tikslinisHash[8],
+                              const string& druska) {
+        vector<string> sutapimai;
+        auto pradzia = chrono::steady_clock::now();
+
+        for (size_t i = 0; i < kandidatuKiekis; ++i) {
+            string kandidatas(4, '0');
+            kandidatas[0] = static_cast<char>('0' + i / 1000);
+            kandidatas[1] = static_cast<char>('0' + (i / 100) % 10);
+            kandidatas[2] = static_cast<char>('0' + (i / 10) % 10);
+            kandidatas[3] = static_cast<char>('0' + i % 10);
+            uint32_t kandidatoHash[8] = {};
+            HashFunkcija(kandidatas + druska, kandidatoHash);
+            if (HashTiksliaiLygu(kandidatoHash, tikslinisHash)) {
+                sutapimai.push_back(kandidatas);
+            }
+        }
+
+        auto pabaiga = chrono::steady_clock::now();
+        chrono::duration<double> trukme = pabaiga - pradzia;
+        cout << "  Patikrinta kandidatu: " << kandidatuKiekis << "\n";
+        cout << "  Paieskos laikas: " << fixed << setprecision(6)
+             << trukme.count() << " s\n";
+        cout << "  Sutapimu skaicius: " << sutapimai.size() << "\n";
+        cout << "  Sutampantys kandidatai:";
+        if (sutapimai.empty()) {
+            cout << " nerasta";
+        } else {
+            for (const string& kandidatas : sutapimai) {
+                cout << " " << kandidatas;
+            }
+        }
+        cout << "\n";
+        return sutapimai;
+    };
+
+    string tikslas;
+    do {
+        cout << "Iveskite tikslini keturiu skaitmenu teksta (0000-9999): ";
+        getline(cin, tikslas);
+    } while (tikslas.size() != 4 ||
+             !all_of(tikslas.begin(), tikslas.end(),
+                     [](unsigned char c) { return c >= '0' && c <= '9'; }));
+
+    cout << "\n7 eksperimentas\n";
+
+    uint32_t hashBeDruskos[8] = {};
+    HashFunkcija(tikslas, hashBeDruskos);
+    cout << "1. Be druskos\n  Tikslinis hash: ";
+    spausdintiHash(hashBeDruskos);
+    cout << "\n";
+    vector<string> sutapimaiBeDruskos = vykdytiPaieska(hashBeDruskos, "");
+    cout << "  Isvada: "
+         << (sutapimaiBeDruskos.size() == 1
+                 ? "vienintelis sutapimas identifikuoja pradine ivesti.\n\n"
+                 : "sutapimas nebutinai identifikuoja pradine ivesti.\n\n");
+
+    const string viesojiDruska = generuotiAtsitiktinuma();
+    uint32_t hashSuDruska[8] = {};
+    HashFunkcija(tikslas + viesojiDruska, hashSuDruska);
+    cout << "2. Viesoji druska\n";
+    cout << "  Druska (" << druskosIlgis << " baitu, hex; baitai jungiami po ivesties): ";
+    spausdintiHex(viesojiDruska);
+    cout << "\n  Tikslinis hash: ";
+    spausdintiHash(hashSuDruska);
+    cout << "\n";
+    vykdytiPaieska(hashSuDruska, viesojiDruska);
+        cout << "  Pastangos vienam taikiniui tokios pacios kaip be druskos; skirtingai "
+            << "druskai is anksto apskaiciuotu hash rezultatu panaudoti negalima.\n\n";
+
+    const string slaptasR = generuotiAtsitiktinuma();
+    uint32_t hashSuSlaptuR[8] = {};
+    HashFunkcija(tikslas + slaptasR, hashSuSlaptuR);
+    cout << "3. Slaptas atsitiktinumas r\n";
+        cout << "  Nezinant r, paieskos erdve: 10 000 kandidatu x 2^128 r reiksmiu; "
+            << "perrinkimas neatliekamas.\n";
+        cout << "  Isipareigojimo hash: ";
+        spausdintiHash(hashSuSlaptuR);
+        cout << "\n  Atskleista r (hex): ";
+        spausdintiHex(slaptasR);
+    uint32_t patikrintasHash[8] = {};
+    HashFunkcija(tikslas + slaptasR, patikrintasHash);
+    cout << "\n  Atskleidus r, hash sutampa: "
+         << (HashTiksliaiLygu(hashSuSlaptuR, patikrintasHash) ? "taip" : "ne")
+         << "\n";
+    cout << "  Tai neirodo saugaus pranesimo paslepimo ar apsaugos nuo velesnio pakeitimo.\n";
+}
+
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
@@ -554,11 +673,17 @@ int main() {
     cout << "4 - 4 eksperimentas (konstitucija.txt)\n";
     cout << "5 - 5 eksperimentas (koliziju paieska)\n";
     cout << "6 - 6 eksperimentas (lavinos efektas)\n";
+    cout << "7 - 7 eksperimentas (spejimas ir druska)\n";
     cout << "Pasirinkimas: ";
     getline(cin, pasirinkimas);
 
     if (pasirinkimas == "6") {
         Eksperimentas6();
+        return 0;
+    }
+
+    if (pasirinkimas == "7") {
+        Eksperimentas7();
         return 0;
     }
 
@@ -603,7 +728,7 @@ int main() {
     }
 
     if (pasirinkimas != "1") {
-        cerr << "Pasirinkite 1, 2, 4, 5 arba 6!" << endl;
+        cerr << "Pasirinkite 1, 2, 4, 5, 6 arba 7!" << endl;
         return 1;
     }
 
