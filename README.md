@@ -16,6 +16,8 @@ P.S. eksperimentai 1-3 buvo atlikti be DI pagalbos rašytame kode, o eksperiment
 
 1 eksperimentas (įvestys): 
 
+Tikrinama, ar tekste pridėjus/ištrynus/pakeitus bent vieną simbolį visiškai pasikeičia hash reikšmė.
+
 Pateikiu excel lentelę su tikrintais failais (kas juos sudarė ir kokie gavosi hash). "Random" visus failus pakeičiau taip: pirmame pakeičiau pirmąjį simbolį, antrame pakeičiau paskutinįjį simbolį, trečiame pridėjau tarpą viduryje teksto.
 
 Pirmi du "random" >1000 baitų failai turi tik ascii simbolius, trečiasis turi ir kitokių (kurie užima daugiau nei 1 baitą atminties).
@@ -38,6 +40,8 @@ Pastebėtina, jog pasikeitus vos vienam simboliui arba atsirandant papildomam ta
 
 2 eksperimentas (išvestis):
 
+Tikrinama, ar visada gaunamas tiksliai 64 hex skaitmenų hash; tikrinama, ar lygiai tas pats tekstas įvestas ranka ir nuskaitytas iš failo duoda tokią pačią hash reikšmę.
+
 Iš paveikslėlių pirmajame teste matosi, kad kiekvienas gautas hash turi lygiai 64 hex simbolius.
 
 Programa taip pat duoda vienodą rezultatą (hash'ą), jei taip pat parašytas vienodų simbolių rinkinys yra rašomas ranka arba skaitomas iš failo.
@@ -52,6 +56,8 @@ Matome, kad išvestis gavosi lygiai tokia pati.
 
 
 3 eksperimentas (determinizmas):
+
+Tikrinama, ar maiša tokiam pačiam tekstui yra visada vienoda (net ir paleidus programą iš naujo ar tarp to pačio teksto įvedimo įterpiant naują tekstą).
 
 <img width="712" height="362" alt="image" src="https://github.com/user-attachments/assets/503602ef-1f70-4d9c-8f0c-24c77f29f62c" />
 
@@ -69,6 +75,8 @@ P.S. - 4-7 eksperimentams įgyvendinti buvo naudotos anksčiau įvardytos DI pri
 
 4 eksperimentas (kodas rašytas su DI pagalba) (efektyvumas):
 
+Matuojamas teksto nuskaitymo ir konvertavimo į hash reikšmę laikas skaitant po nurodytą kiekį eilučių iš failo, apžvengiami rezultatai.
+
 <img width="477" height="786" alt="image" src="https://github.com/user-attachments/assets/f7cc6fd7-b546-4dcb-8f4e-1b067c7e95ed" />
 <img width="261" height="745" alt="image" src="https://github.com/user-attachments/assets/5aca20d5-1bf8-4b1f-97ea-5db87f64dcf7" />
 <img width="283" height="285" alt="image" src="https://github.com/user-attachments/assets/916914e1-46f7-4624-b4df-827c87bdcbe3" />
@@ -79,6 +87,8 @@ Grafikas (pastaba - grafiką sukūrė Google Gemini dirbtinio intelekto įrankis
 Kaip matome iš gautos išvesties, kuo daugiau baitų apdorojo ("hash'avo") programa, tuo ilgiau ji užtruko, taip pat, matome, kad kreivė pastoviai kyla į viršų, tad keistų anomalijų ar nesutapimų šiame programos eksperimente nebuvo rasta.
 
 5 eksperimentas (kodas rašytas su DI pagalba) (kolizijos):
+
+Tikrinama, ar skirtingos sugeneruotos įvestys gali duoti tokią pačią maišą (porose ir tikrinant visas poras).
 
 <img width="852" height="727" alt="image" src="https://github.com/user-attachments/assets/f4f3b128-ff5b-406b-87e4-7a14c52f106e" />
 
