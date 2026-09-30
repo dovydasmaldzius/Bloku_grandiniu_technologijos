@@ -56,6 +56,59 @@ string HashKey(const uint32_t hash[8]) {
     return oss.str();
 }
 
+struct SkirtumoStatistika {
+    double min;
+    double max;
+    double suma;
+    size_t kiekis;
+
+    SkirtumoStatistika()
+        : min(101.0), max(0.0), suma(0.0), kiekis(0) {}
+
+    void prideti(double reiksme) {
+        if (reiksme < min) min = reiksme;
+        if (reiksme > max) max = reiksme;
+        suma += reiksme;
+        ++kiekis;
+    }
+
+    double vidurkis() const {
+        return kiekis == 0 ? 0.0 : suma / kiekis;
+    }
+};
+
+int SkirtinguBituSkaicius(const uint32_t a[8], const uint32_t b[8]) {
+    int skirtumas = 0;
+
+    for (int i = 0; i < 8; ++i) {
+        uint32_t x = a[i] ^ b[i];
+
+        while (x != 0) {
+            skirtumas += static_cast<int>(x & 1U);
+            x >>= 1;
+        }
+    }
+
+    return skirtumas;
+}
+
+int SkirtinguHexSkaitmenuSkaicius(const uint32_t a[8], const uint32_t b[8]) {
+    int skirtumas = 0;
+
+    for (int i = 0; i < 8; ++i) {
+        for (int shift = 0; shift < 32; shift += 4) {
+            uint32_t nibbleA = (a[i] >> shift) & 0xFU;
+            uint32_t nibbleB = (b[i] >> shift) & 0xFU;
+
+            if (nibbleA != nibbleB) {
+                ++skirtumas;
+            }
+        }
+    }
+
+    return skirtumas;
+}
+
 void Eksperimentas4() {
     ifstream failas("konstitucija.txt", ios::binary);
     if (!failas) {
@@ -234,8 +287,6 @@ void Eksperimentas5() {
     };
 
     for (size_t ilgis : ilgiai) {
-        // Sugeneruojama 200 000 unikaliu eiluciu:
-        // kiekvienos poros ivesciai skiriasi.
         vector<string> eilutes = generuotiUnikalius(ilgis, poruKiekis * 2);
 
         size_t patikrintaPoru = 0;
@@ -371,6 +422,125 @@ void Eksperimentas5() {
     }
 }
 
+void Eksperimentas6() {
+    const size_t poruIsViso = 100000;
+    const size_t poruIlgiui = poruIsViso / 4;
+    const uint64_t seed = 123456789ULL;
+    const vector<size_t> ilgiai = {10, 100, 500, 1000};
+
+    mt19937_64 rng(seed);
+    uniform_int_distribution<int> simboliuDist(32, 126);
+
+    SkirtumoStatistika bendriBitai;
+    SkirtumoStatistika bendriHex;
+    size_t bendrosKolizijos = 0;
+    size_t histograma[10] = {};
+
+    cout << "\n6 eksperimentas: vieno ASCII simbolio pakeitimas\n";
+    cout << "Poru is viso: " << poruIsViso
+         << "; kiekvienam ilgiui: " << poruIlgiui << "\n";
+    cout << "Abcele: spausdinami ASCII kodai 32-126 (94 simboliai).\n";
+    cout << "MT19937_64 generatoriaus seed: " << seed << "\n";
+    cout << "Hash dydis: 256 bitai (64 hex skaitmenys).\n\n";
+
+    cout << fixed << setprecision(4);
+
+    for (size_t ilgis : ilgiai) {
+        SkirtumoStatistika ilgioBitai;
+        SkirtumoStatistika ilgioHex;
+        size_t ilgioKolizijos = 0;
+
+        uniform_int_distribution<size_t> pozicijaDist(0, ilgis - 1);
+
+        for (size_t p = 0; p < poruIlgiui; ++p) {
+            string a;
+            a.reserve(ilgis);
+
+            for (size_t i = 0; i < ilgis; ++i) {
+                a.push_back(static_cast<char>(simboliuDist(rng)));
+            }
+
+            string b = a;
+            const size_t pozicija = pozicijaDist(rng);
+            const int senasSimbolis =
+                static_cast<unsigned char>(b[pozicija]);
+
+            int naujasSimbolis;
+            do {
+                naujasSimbolis = simboliuDist(rng);
+            } while (naujasSimbolis == senasSimbolis);
+
+            b[pozicija] = static_cast<char>(naujasSimbolis);
+
+            uint32_t hashA[8] = {};
+            uint32_t hashB[8] = {};
+            HashFunkcija(a, hashA);
+            HashFunkcija(b, hashB);
+
+            const int bituSkirtumas =
+                SkirtinguBituSkaicius(hashA, hashB);
+            const int hexSkirtumas =
+                SkirtinguHexSkaitmenuSkaicius(hashA, hashB);
+
+            const double bituProcentai =
+                100.0 * bituSkirtumas / 256.0;
+            const double hexProcentai =
+                100.0 * hexSkirtumas / 64.0;
+
+            ilgioBitai.prideti(bituProcentai);
+            ilgioHex.prideti(hexProcentai);
+            bendriBitai.prideti(bituProcentai);
+            bendriHex.prideti(hexProcentai);
+
+            size_t bin = static_cast<size_t>(bituProcentai / 10.0);
+            if (bin > 9) {
+                bin = 9;
+            }
+            ++histograma[bin];
+
+            if (HashTiksliaiLygu(hashA, hashB)) {
+                ++ilgioKolizijos;
+                ++bendrosKolizijos;
+            }
+        }
+
+        cout << "Ilgis " << ilgis << " baitu, poru: "
+             << poruIlgiui << "\n";
+        cout << "  Bitu skirtumas (%): min=" << ilgioBitai.min
+             << ", max=" << ilgioBitai.max
+             << ", vidurkis=" << ilgioBitai.vidurkis() << "\n";
+        cout << "  Hex skirtumas (%):  min=" << ilgioHex.min
+             << ", max=" << ilgioHex.max
+             << ", vidurkis=" << ilgioHex.vidurkis() << "\n";
+        cout << "  Tiksliu koliziju: " << ilgioKolizijos << "\n\n";
+    }
+
+    cout << "Bendri rezultatai (" << poruIsViso << " poru):\n";
+    cout << "  Bitu skirtumas (%): min=" << bendriBitai.min
+         << ", max=" << bendriBitai.max
+         << ", vidurkis=" << bendriBitai.vidurkis() << "\n";
+    cout << "  Hex skirtumas (%):  min=" << bendriHex.min
+         << ", max=" << bendriHex.max
+         << ", vidurkis=" << bendriHex.vidurkis() << "\n";
+    cout << "  Tiksliu koliziju: " << bendrosKolizijos << "\n\n";
+
+    cout << "Bitu skirtumo procentu histograma:\n";
+    for (size_t i = 0; i < 10; ++i) {
+        const size_t lower = i * 10;
+        const size_t upper = (i == 9) ? 100 : (i + 1) * 10;
+
+        cout << "  " << lower << "-" << upper << "%: "
+             << histograma[i] << "\n";
+    }
+
+    cout << "\nOrientaciniai nepriklausomu tolygiai pasiskirsciusiu hash vidurkiai: "
+         << "apie 50% bitams ir 93.75% hex skaitmenims.\n";
+    cout << "Tai statistines orientacines reiksmes, ne reikalavimai ir ne saugumo irodymas.\n";
+    cout << "Geras lavinos efektas pats savaime nereiskia atsparumo kolizijoms. "
+         << "Koliziju paieska atsitiktiniu poru, viso rinkinio ir strukturiniu ivesciu "
+         << "testuose tikrina kita funkcijos savybe.\n";
+}
+
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
@@ -383,8 +553,14 @@ int main() {
     cout << "2 - nuskaityti is failo\n";
     cout << "4 - 4 eksperimentas (konstitucija.txt)\n";
     cout << "5 - 5 eksperimentas (koliziju paieska)\n";
+    cout << "6 - 6 eksperimentas (lavinos efektas)\n";
     cout << "Pasirinkimas: ";
     getline(cin, pasirinkimas);
+
+    if (pasirinkimas == "6") {
+        Eksperimentas6();
+        return 0;
+    }
 
     if (pasirinkimas == "5") {
         Eksperimentas5();
@@ -397,7 +573,7 @@ int main() {
     }
 
     if (pasirinkimas == "2") {
-        ifstream failas("abc.txt");
+        ifstream failas("abc.txt", ios::binary);
         if (!failas) {
             cerr << "Nepavyko atidaryti failo" << endl;
             return 1;
@@ -427,7 +603,7 @@ int main() {
     }
 
     if (pasirinkimas != "1") {
-        cerr << "Pasirinkite 1, 2, 4 arba 5!" << endl;
+        cerr << "Pasirinkite 1, 2, 4, 5 arba 6!" << endl;
         return 1;
     }
 
