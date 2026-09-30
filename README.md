@@ -63,7 +63,18 @@ Programa taip pat išveda tą patį hash'ą, jei įvestyje tą patį tekstą įv
 
 Kaip matome, naujaszodis įvesties gautas hash yra visiškai tas pats, nors tarp įvedimų įrašėme ir visiškai kitą reikšmę.
 
-4 eksperimentas (efektyvumas):
+P.S. - 4-7 eksperimentams įgyvendinti buvo naudotos anksčiau įvardytos DI priemonės (įrankiai naudoti tobulinti kodui, kad galima būtų atlikti šiuos eksperimentus).
+
+4 eksperimentas (kodas rašytas su DI pagalba) (efektyvumas):
+
+<img width="477" height="786" alt="image" src="https://github.com/user-attachments/assets/f7cc6fd7-b546-4dcb-8f4e-1b067c7e95ed" />
+<img width="261" height="745" alt="image" src="https://github.com/user-attachments/assets/5aca20d5-1bf8-4b1f-97ea-5db87f64dcf7" />
+<img width="283" height="285" alt="image" src="https://github.com/user-attachments/assets/916914e1-46f7-4624-b4df-827c87bdcbe3" />
+
+Grafikas (pastaba - grafiką sukūrė Google Gemini dirbtinio intelekto įrankis):
+<img width="1053" height="621" alt="image" src="https://github.com/user-attachments/assets/cf6dcd10-a0da-47ef-b401-66972819bf6b" />
+
+Kaip matome iš gautos išvesties, kuo daugiau baitų apdorojo ("hash'avo") programa, tuo ilgiau ji užtruko, taip pat, matome, kad kreivė pastoviai kyla į viršų, tad keistų anomalijų ar nesutapimų šiame programos eksperimente nebuvo rasta.
 
 5 eksperimentas (kolizijos):
 
