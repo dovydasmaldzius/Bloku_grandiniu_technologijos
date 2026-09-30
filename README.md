@@ -1,18 +1,18 @@
 # Bloku_grandiniu_technologijos
 
-Programos failas: v01.exe (v02.exe failas yra naudojamas eksperimentams atlikti (nuo 4 iki 7 eksperimento).
+Programos failas: v01.exe (v02.exe failas yra naudojamas eksperimentams atlikti (nuo 4 iki 7 eksperimento)).
 
 Programos paleidimo instrukcija: vartotojas atsisiunčia ir atsidaro v01.exe failą.
 
 Programos veikimo principas: vartotojas pasirenka: įvesti tekstą arba nuskaityti tekstą iš failo; įvestas/nuskaitytas tekstas yra "suhashuojamas", tai yra, kiekviena įvestis duoda 64 hex simbolių rinkinį*; programa paprašo įvesti tekstą vėl arba baigti darbą.
 
-*Kaip vyksta hash'avimo funkcija: vartotojo įvestas/nuskaitytas tekstas yra skaitomas po vieną simbolį, kiekvienas simbolis yra paverčiamas į jo skaitinę baito reikšmę (jei yra naudojamas ASCII simbolis - tada į ASCII kodą). Toliau kiekvienam simboliui pagal formulę yra atnaujinami 8 hash'ai (skaitinės reikšmės) ir toliau iš eilės skaitomi kiti simboliai (tarpas irgi yra simbolis), ir kiekvienas naujas simbolis toliau keičia ankstesnę hash reikšmę, kol yra nuskaitomas visas tekstas. Pabaigoje, prieš išvedant hash'ą, jis yra paverčiamas į šešioliktainę sistemą (kadangi iš viso yra 8 hash'ai - kiekvienas jų sudaro 32 bitus ir bendroje sumoje gaunasi 256 bitai. Šie bitai vėliau yra paverčiami į šešioliktainę skaičiavimo sistemą (32 bitams užrašyti naudojami 8 hex skaitmenys) ir taip gaunasi 64 hex skaitmenys).
+*Kaip vyksta hash'avimo funkcija: vartotojo įvestas/nuskaitytas tekstas yra skaitomas po vieną simbolį, kiekvienas simbolis yra paverčiamas į jo skaitinę baito reikšmę (hash) (jei yra naudojamas ASCII simbolis - tada į ASCII kodą). Toliau kiekvienam simboliui pagal formulę yra atnaujinami 8 hash'ai (skaitinės reikšmės) ir toliau iš eilės skaitomi kiti simboliai (tarpas irgi yra simbolis), ir kiekvienas naujas simbolis toliau keičia ankstesnę hash reikšmę, kol yra nuskaitomas visas tekstas. Pabaigoje, prieš išvedant hash'ą, jis yra paverčiamas į šešioliktainę sistemą (kadangi iš viso yra 8 hash'ai - kiekvienas jų sudaro 32 bitus ir bendroje sumoje gaunasi 256 bitai. Šie bitai vėliau yra paverčiami į šešioliktainę skaičiavimo sistemą (32 bitams užrašyti naudojami 8 hex skaitmenys) ir taip gaunasi 64 hex skaitmenys).
 
-Programos pseudokodas: pradžia -> naudotojas pasirenka, ar įvesti tekstą ar nuskaityti iš failo -> (jeigu pasirankamas įvedimo variantas, naudotojas įveda tekstą ir spaudžia enter -> programa pateikia hash'ą -> programa paprašo vėl įvesti tekstą arba baigti darbą) -> (jeigu pasirenkamas nuskaitymo variantas, programa skaito tekstą iš failo ir pateikia jo hash'ą) -> pabaiga.
+Programos pseudokodas: pradžia -> naudotojas pasirenka, ar įvesti tekstą ar nuskaityti iš failo -> (jeigu pasirenkamas įvedimo variantas, naudotojas įveda tekstą ir spaudžia enter -> programa pateikia hash'ą -> programa paprašo vėl įvesti tekstą arba baigti darbą) -> (jeigu pasirenkamas nuskaitymo variantas, programa skaito tekstą iš failo ir pateikia jo hash'ą) -> pabaiga.
 
 Programos tobulinimui naudoti DI įrankiai: ChatGPT; Google GEMINI, Copilot (nemokamos versijos).
 
-P.S. eksperimentai 1-3 buvo atlikti be DI pagalbos rašytame kode, o eksperimentams 4-7 buvo naudojama DI pagalba kodo rašymui.
+P.S. eksperimentai 1-3 buvo atlikti be DI pagalbos paties rašytame kode, o eksperimentams 4-7 buvo naudojama DI pagalba kodo rašymui.
 
 1 eksperimentas (įvestys): 
 
@@ -61,7 +61,7 @@ Tikrinama, ar maiša tokiam pačiam tekstui yra visada vienoda (net ir paleidus 
 
 <img width="712" height="362" alt="image" src="https://github.com/user-attachments/assets/503602ef-1f70-4d9c-8f0c-24c77f29f62c" />
 
-Matome, kad du kartus įvedus tą patį žodį, išvestis gaunasi tokia pati. o čia įrodymas, kad paleidus programą iš naujo ir įvedus tą patį žodį vistiek gaunama ta pati išvestis:
+Matome, kad du kartus įvedus tą patį žodį, išvestis gaunasi tokia pati. O čia įrodymas, kad paleidus programą iš naujo ir įvedus tą patį žodį vistiek gaunama ta pati išvestis:
 
 <img width="788" height="338" alt="image" src="https://github.com/user-attachments/assets/f23dfe07-073e-4928-a334-bbacb4b249d8" />
 
@@ -71,7 +71,11 @@ Programa taip pat išveda tą patį hash'ą, jei įvestyje tą patį tekstą įv
 
 Kaip matome, naujaszodis įvesties gautas hash yra visiškai tas pats, nors tarp įvedimų įrašėme ir visiškai kitą reikšmę.
 
+
+
 P.S. - 4-7 eksperimentams įgyvendinti buvo naudotos anksčiau įvardytos DI priemonės (įrankiai naudoti tobulinti kodui, kad galima būtų atlikti šiuos eksperimentus).
+
+
 
 4 eksperimentas (kodas rašytas su DI pagalba) (efektyvumas):
 
@@ -94,15 +98,20 @@ Tikrinama, ar skirtingos sugeneruotos įvestys gali duoti tokią pačią maišą
 
 Kaip matome, nebuvo rasta nei vienos kolizijos, nes to šansas yra itin mažas: Kai yra "hash'uojama" skirtinga įvestis šansas to, kad kažkuri viena pora turės tokį patį "hash'ą", pagal formulę, yra 2^-256, o skirtingų porų, kai eilučių yra 200000 (100000 porų = 100000 * 2 eilučių), pagal formulę, yra 200000 * (200000-1)/2 = 19 999 900 000, o tai yra labai mažas skaičius lyginant su 2^256.
 
+
+
 6 eksperimentas (kodas rašytas su DI pagalba) (lavinos efektas):
 
 <img width="550" height="612" alt="image" src="https://github.com/user-attachments/assets/7df037f7-71e6-40f7-beb0-05c7f4700bab" />
 <img width="295" height="208" alt="image" src="https://github.com/user-attachments/assets/1f9df629-d880-4897-834e-b75d2e8aecc2" />
 
 
+
 7 eksperimentas (kodas pilnai parašytas Copilot DI įrankio) (spėjimas, vieša druska ir slaptas atsitiktinumas):
 
 <img width="1242" height="777" alt="image" src="https://github.com/user-attachments/assets/d1c29f9d-a8c5-4de7-a4fe-f543bbd58522" />
+
+
 
 8 eksperimentas (išvados):
 
