@@ -97,5 +97,3 @@ Kaip matome, nebuvo rasta nei vienos kolizijos, nes to šansas yra itin mažas: 
 8 eksperimentas (išvados):
 
 Šis eksperimentas yra daugiausia aprašytas readme failo pradžioje, tai yra, ten įkėliau programos veikimo principą, pseudokodą ir paleidimo instrukciją.
-
-Papildoma užduotis (kodo lyginimas su MD5, SHA-1, SHA-256:
