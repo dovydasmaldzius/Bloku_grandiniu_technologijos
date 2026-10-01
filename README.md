@@ -102,6 +102,8 @@ Kaip matome, nebuvo rasta nei vienos kolizijos, nes to šansas yra itin mažas: 
 
 6 eksperimentas (kodas rašytas su DI pagalba) (lavinos efektas):
 
+Tikrinama, ar mažas pakeitimas gali sukelti lavinos efektą - didelį hash'o pokytį.
+
 <img width="550" height="612" alt="image" src="https://github.com/user-attachments/assets/7df037f7-71e6-40f7-beb0-05c7f4700bab" />
 <img width="295" height="208" alt="image" src="https://github.com/user-attachments/assets/1f9df629-d880-4897-834e-b75d2e8aecc2" />
 
