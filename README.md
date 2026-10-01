@@ -113,7 +113,11 @@ Kaip matome, vidurkiai bitams ir hex skaitmenims buvo panašūs į orientacinius
 
 7 eksperimentas (kodas pilnai parašytas Copilot DI įrankio) (spėjimas, vieša druska ir slaptas atsitiktinumas):
 
+Tikrinama, ar programa atspėja pradinę įvestį, kai yra duotas tikslus skaičių intervalas ir įvestis; tikrinama, ar pridėjus viešą druską prie įvesties pasikeitė programos pradinės įvesties spėjimas; tikrinama, ar iš pradžių nežinomos druskos pridėjimas leidžia programai atspėti pradinę reikšmę.
+
 <img width="1242" height="777" alt="image" src="https://github.com/user-attachments/assets/d1c29f9d-a8c5-4de7-a4fe-f543bbd58522" />
+
+Kaip matome, pridėjus viešai žinomą druską niekas nepasikeitė, tad žinomos druskos pridėjimas nesukuria didesnio kriptografinio saugumo. Tačiau, jei pridėsime iš anksto nežinomą druską, programai atspėti pradinę reikšmę tampa beveik neįmanoma.
 
 
 
