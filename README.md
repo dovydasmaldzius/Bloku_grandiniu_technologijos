@@ -107,6 +107,8 @@ Tikrinama, ar mažas pakeitimas gali sukelti lavinos efektą - didelį hash'o po
 <img width="550" height="612" alt="image" src="https://github.com/user-attachments/assets/7df037f7-71e6-40f7-beb0-05c7f4700bab" />
 <img width="295" height="208" alt="image" src="https://github.com/user-attachments/assets/1f9df629-d880-4897-834e-b75d2e8aecc2" />
 
+Kaip matome, vidurkiai bitams ir hex skaitmenims buvo panašūs į orientacinius duotus užduotyje, tai yra, apie 50% bitams ir 93,75% hex skaitmenims
+
 
 
 7 eksperimentas (kodas pilnai parašytas Copilot DI įrankio) (spėjimas, vieša druska ir slaptas atsitiktinumas):
