@@ -1,12 +1,13 @@
-#include "blockchain.h"
-#include "hash.h"
-
 #include <chrono>
 #include <iomanip>
 #include <random>
 #include <sstream>
 #include <stdexcept>
 #include <unordered_map>
+#include <limits>
+
+#include "blockchain.h"
+#include "hash.h"
 
 using namespace std;
 
@@ -115,8 +116,12 @@ if (result.finalUsers[sender].balance < tx.amount) {
 result.rejected.push_back(tx);
 continue; }
 
-result.finalUsers[sender].balance -= tx.amount;
+if (result.finalUsers[receiver].balance >
+numeric_limits<int64_t>::max() - tx.amount) {
+result.rejected.push_back(tx);
+continue; }
 
+result.finalUsers[sender].balance -= tx.amount;
 result.finalUsers[receiver].balance += tx.amount;
 
 usedTransactionIds[tx.transactionId] = true;
