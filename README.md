@@ -26,6 +26,7 @@ Pastaba: naudotas kasimo sudėtingumas - 3.
 Darbo įrodymai iš kodų:
 
 Galima atkurti vartotojus, transakcijas, pradinę būseną ir testų rezultatus:
+
 <img width="455" height="196" alt="image" src="https://github.com/user-attachments/assets/0f813fd7-cb62-4d73-b287-bc429d0737b6" />
 <img width="665" height="88" alt="image" src="https://github.com/user-attachments/assets/3eabfa49-d736-4b5f-8552-d39e12101869" />
 <img width="396" height="115" alt="image" src="https://github.com/user-attachments/assets/53f42257-e540-463c-9b4e-0457f3f021d7" />
@@ -33,6 +34,7 @@ Galima atkurti vartotojus, transakcijas, pradinę būseną ir testų rezultatus:
 (Naudojant tą pačią pradinę reikšmę galima atkurti tuos pačius rezultatus)
 
 Balansai neneigiami, lėšų suma išsaugoma, ta pati transakcija neįtraukiama pakartotinai:
+
 <img width="590" height="90" alt="image" src="https://github.com/user-attachments/assets/ca8d05b0-07c0-4a96-9c9b-6afc52e9fe58" />
 <img width="572" height="57" alt="image" src="https://github.com/user-attachments/assets/4ce5fe99-888c-4c60-b2cb-5f32e387de4a" />
 <img width="807" height="93" alt="image" src="https://github.com/user-attachments/assets/90badebf-c3f6-47d1-bbe6-bc0df4a1f3e6" />
@@ -40,6 +42,7 @@ Balansai neneigiami, lėšų suma išsaugoma, ta pati transakcija neįtraukiama 
 ()
 
 PoW ir transakcijų duomenys patikrinami prieš įtraukiant bloką:
+
 <img width="608" height="215" alt="image" src="https://github.com/user-attachments/assets/f5ff1437-e8d3-48c9-921f-c4e6d5cb4d04" />
 <img width="866" height="365" alt="image" src="https://github.com/user-attachments/assets/23c3ec51-a5f3-4cc0-9c7b-53e61c6d8319" />
 
@@ -65,11 +68,13 @@ v0.2 užduotis:
 Užduoties tikslas: papildyti pirmąją darbo dalį (v0.1) merkle medžiu ir validavimo testais. Šiai užduočiai buvo sukurti papildomi failai merkle.h, merkle.cpp ir main2.cpp.
 
 Šioje užduotyje atlikti transakcijų validavimo testai:
+
 <img width="742" height="840" alt="image" src="https://github.com/user-attachments/assets/c96f23ef-b845-4fa6-9bf7-a83788cfc864" />
 <img width="427" height="222" alt="image" src="https://github.com/user-attachments/assets/1595d337-034e-4be4-b3f2-e4d995c309ff" />
 
 (Kokie testai buvo tikrinami: )
 
 Šioje užduotyje atlikti Merkle medžio testai su 1/2/3/5 transakcijomis:
+
 <img width="760" height="330" alt="image" src="https://github.com/user-attachments/assets/cbecef4e-109e-4cb9-ad62-e6914fc10aca" />
 
