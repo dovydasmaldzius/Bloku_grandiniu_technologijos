@@ -26,7 +26,6 @@ Pastaba: naudotas kasimo sudėtingumas - 3.
 Darbo įrodymai iš kodų:
 
 Galima atkurti vartotojus, transakcijas, pradinę būseną ir testų rezultatus:
-
 <img width="455" height="196" alt="image" src="https://github.com/user-attachments/assets/0f813fd7-cb62-4d73-b287-bc429d0737b6" />
 <img width="665" height="88" alt="image" src="https://github.com/user-attachments/assets/3eabfa49-d736-4b5f-8552-d39e12101869" />
 <img width="396" height="115" alt="image" src="https://github.com/user-attachments/assets/53f42257-e540-463c-9b4e-0457f3f021d7" />
@@ -34,8 +33,17 @@ Galima atkurti vartotojus, transakcijas, pradinę būseną ir testų rezultatus:
 (Naudojant tą pačią pradinę reikšmę galima atkurti tuos pačius rezultatus)
 
 Balansai neneigiami, lėšų suma išsaugoma, ta pati transakcija neįtraukiama pakartotinai:
+<img width="590" height="90" alt="image" src="https://github.com/user-attachments/assets/ca8d05b0-07c0-4a96-9c9b-6afc52e9fe58" />
+<img width="572" height="57" alt="image" src="https://github.com/user-attachments/assets/4ce5fe99-888c-4c60-b2cb-5f32e387de4a" />
+<img width="807" height="93" alt="image" src="https://github.com/user-attachments/assets/90badebf-c3f6-47d1-bbe6-bc0df4a1f3e6" />
 
-PoW ir transakcijų duomenys patikrinami prieš įtraukiant bloką: 
+()
+
+PoW ir transakcijų duomenys patikrinami prieš įtraukiant bloką:
+<img width="608" height="215" alt="image" src="https://github.com/user-attachments/assets/f5ff1437-e8d3-48c9-921f-c4e6d5cb4d04" />
+<img width="866" height="365" alt="image" src="https://github.com/user-attachments/assets/23c3ec51-a5f3-4cc0-9c7b-53e61c6d8319" />
+
+(Parodoma, kad iš pirmo transakcijos turi būti patvirtintos, ir tik vėliau priimtos į bloką)
 
 Pavyzdys: kelių blokų išvestys (imti pirmasis ir antrasis blokai):
 
@@ -52,6 +60,10 @@ Galutinė suvestinė:
 <img width="357" height="418" alt="image" src="https://github.com/user-attachments/assets/23f2a3f9-f41d-4091-b143-dcbc5aa07b17" />
 
 Galutinė pinigų suma nepasikeitė, nes nėra papildomai skaičiuojama komisinių ar kasimo atlygiai.
+
+v0.2 užduotis:
+Užduoties tikslas:
+
 
 
 
