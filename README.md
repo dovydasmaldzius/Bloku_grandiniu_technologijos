@@ -19,7 +19,7 @@ Modelio aprašymas:
 
 
 v0.1 užduotis
-Užduoties tikslas: 
+Užduoties tikslas: . Šiai užduočiai sukurti failai: hash.h ir hash.cpp (ankstesnės užduoties hash funkcija, išskirstyta į dalis); blockchain.h ir blockchain.cpp; main.cpp.
 
 Pastaba: naudotas kasimo sudėtingumas - 3.
 
@@ -62,12 +62,14 @@ Galutinė suvestinė:
 Galutinė pinigų suma nepasikeitė, nes nėra papildomai skaičiuojama komisinių ar kasimo atlygiai.
 
 v0.2 užduotis:
-Užduoties tikslas:
+Užduoties tikslas: papildyti pirmąją darbo dalį (v0.1) merkle medžiu ir validavimo testais. Šiai užduočiai buvo sukurti papildomi failai merkle.h, merkle.cpp ir main2.cpp.
 
+Šioje užduotyje atlikti transakcijų validavimo testai:
+<img width="742" height="840" alt="image" src="https://github.com/user-attachments/assets/c96f23ef-b845-4fa6-9bf7-a83788cfc864" />
+<img width="427" height="222" alt="image" src="https://github.com/user-attachments/assets/1595d337-034e-4be4-b3f2-e4d995c309ff" />
 
+(Kokie testai buvo tikrinami: )
 
-
-
-v0.2 užduotis:
-Užduoties tikslas: 
+Šioje užduotyje atlikti Merkle medžio testai su 1/2/3/5 transakcijomis:
+<img width="760" height="330" alt="image" src="https://github.com/user-attachments/assets/cbecef4e-109e-4cb9-ad62-e6914fc10aca" />
 
