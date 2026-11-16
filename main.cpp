@@ -42,9 +42,8 @@ auto programEnd = chrono::steady_clock::now();
 
 chrono::duration<double>totalTime = programEnd - programStart;
 
-cout << "==============================\n";
-cout << "SUPAPRASTINTA BLOKU GRANDINE\n";
-cout<< "==============================\n\n";
+cout << "Supaprastinta bloku grandine:\n";
+cout <<"\n                            \n";
 cout << "Vartotoju skaicius: " << users.size() << '\n';
 cout << "Sugeneruotu transakciju: " <<transactions.size()<< '\n';
 cout << "Priimtu transakciju: " << validation.accepted.size() << '\n';
@@ -52,9 +51,9 @@ cout << "Atmestu transakciju: "<< validation.rejected.size() << '\n';
 cout << "Pradine bendra pinigu suma: " << initialFunds << '\n';
 cout << "Galutine bendra pinigu suma: " << finalFunds << '\n';
 cout << "Bendra suma nepakito: " << (initialFunds == finalFunds? "TAIP" : "NE") << "\n\n";
-cout << "==============================\n";
-cout << "BLOKU GRANDINE\n";
-cout << "==============================\n";
+cout <<"\n                            \n";
+cout << "Bloku grandine:\n";
+cout <<"\n                            \n";
 
 for (const auto& block : blockchain) {
 cout << "\nBloko aukstis: " << block.height << '\n';
@@ -69,13 +68,12 @@ cout << "Mining time: " << fixed << setprecision(6) << block.miningTime << " s\n
 
 bool blockchainValid = VerifyBlockchain(blockchain);
 
-cout << "\n==============================\n";
-cout << "GRANDINES TIKRINIMAS\n";
-cout<< "==============================\n";
+cout <<"\n                            \n";
+cout << "Grandines tikrinimas:\n";
 cout << "Blockchain validi: " << (blockchainValid ? "TAIP" : "NE") << '\n';
-cout << "\n==============================\n";
-cout << "GALUTINE SANTRAUKA\n";
-cout << "==============================\n";
+cout <<"\n                            \n";
+cout << "Galutine suvestine:\n";
+cout <<"\n                            \n";
 cout << "Vartotoju: " << users.size() << '\n';
 cout << "Sugeneruotu transakciju: " << transactions.size() << '\n';
 cout << "Priimtu transakciju: " << validation.accepted.size() << '\n';

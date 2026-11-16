@@ -116,8 +116,7 @@ if (result.finalUsers[sender].balance < tx.amount) {
 result.rejected.push_back(tx);
 continue; }
 
-if (result.finalUsers[receiver].balance >
-numeric_limits<int64_t>::max() - tx.amount) {
+if (result.finalUsers[receiver].balance > numeric_limits<int64_t>::max() - tx.amount) {
 result.rejected.push_back(tx);
 continue; }
 
