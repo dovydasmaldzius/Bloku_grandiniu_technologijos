@@ -29,7 +29,7 @@ Galima atkurti vartotojus, transakcijas, pradinę būseną ir testų rezultatus:
 
 <img width="455" height="196" alt="image" src="https://github.com/user-attachments/assets/0f813fd7-cb62-4d73-b287-bc429d0737b6" />
 <img width="665" height="88" alt="image" src="https://github.com/user-attachments/assets/3eabfa49-d736-4b5f-8552-d39e12101869" />
-<img width="396" height="115" alt="image" src="https://github.com/user-attachments/assets/53f42257-e540-463c-9b4e-0457f3f021d7" />
+<img width="561" height="37" alt="image" src="https://github.com/user-attachments/assets/ba7db289-4df9-4960-813d-22c52a48a852" />
 
 (Naudojant tą pačią pradinę reikšmę galima atkurti tuos pačius rezultatus)
 
