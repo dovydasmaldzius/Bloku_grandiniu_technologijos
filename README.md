@@ -50,8 +50,6 @@ Pavyzdys: kelių blokų išvestys (imti pirmasis ir antrasis blokai):
 
 <img width="832" height="443" alt="image" src="https://github.com/user-attachments/assets/e995b3f6-39ac-49d1-9416-ad8b4834695e" />
 
-Kiekvieną bloką sudaro: 
-
 Kodėl iš viso buvo sugeneruoti 48 skirtingi blokai (nuo nulinio iki 47-o)? Nes buvo sugeneruota 10000 transakcijų, bet į blokų grandines priimtos tik 4625 transakcijos, 46 blokai turi po 100 transakcijų, o paskutinysis blokas turi 25.
 
 Kodėl į blokų grandines buco priimtos tik 4625 transakcijos iš 10000? Nes transakcijose buvo tikrinama, ar egzistuoja siuntėjas/gavėjas, ar tai nėra tas pats asmuo, ar pervedama teigiama suma, ar transakcijos ID yra teisingas ir nesikartoja, tad neatitikus šių kriterijų buvo atmestos likusios transakcijos (paprasčiau tariant - kiekvienos transakcijos suma buvo parenkama atsitiktinai, tačiau ir vartotojų turimi pinigai taip pat buvo parenkami atsitiktinai, tad daugeliui sugeneruotų vartotojų paprasčiausiai neužtekdavo lėšų pervesti jas kitam vartotojui, taip būdavo atmetama transakcija)
