@@ -70,7 +70,7 @@ Užduoties tikslas: papildyti pirmąją darbo dalį (v0.1) merkle medžiu ir val
 
 <img width="752" height="220" alt="image" src="https://github.com/user-attachments/assets/cf8bec7c-a578-45e8-b7c7-12c6e3343493" />
 
-Kodo vietos, kuriose
+Kodo vietos, kuriose yra transakcijų turinio ir tvarkos pakeitimo testai:
 
 Šioje užduotyje atlikti Merkle medžio testai su 1/2/3/5 transakcijomis:
 
