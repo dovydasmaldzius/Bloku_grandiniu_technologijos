@@ -93,9 +93,7 @@ Galutinė suvestinė:
 
 v0.3 užduotis: 
 
-Šią užduotį (papildomą failą v0.3.cpp) pilnai sugeneravo DI įrankis "COPILOT", keliose vietose užduotį tobulino įrankis "ChatGPT"
-
-Ką šioje užduotyje patobulino dirbtinis intelektas:
+Šią užduotį (papildomą failą v0.3.cpp) pilnai sugeneravo DI įrankis "COPILOT", keliose vietose užduotį tobulino įrankis "ChatGPT".
 
 Šioje užduotyje buvo tobulinami: Merkle medžio skaičiavimo efektyvumas; Validavimo klaidos
 
