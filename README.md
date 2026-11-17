@@ -39,8 +39,6 @@ Balansai neneigiami, lėšų suma išsaugoma, ta pati transakcija neįtraukiama 
 <img width="572" height="57" alt="image" src="https://github.com/user-attachments/assets/4ce5fe99-888c-4c60-b2cb-5f32e387de4a" />
 <img width="807" height="93" alt="image" src="https://github.com/user-attachments/assets/90badebf-c3f6-47d1-bbe6-bc0df4a1f3e6" />
 
-()
-
 PoW ir transakcijų duomenys patikrinami prieš įtraukiant bloką:
 
 <img width="608" height="215" alt="image" src="https://github.com/user-attachments/assets/f5ff1437-e8d3-48c9-921f-c4e6d5cb4d04" />
