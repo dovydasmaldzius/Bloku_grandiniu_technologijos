@@ -72,9 +72,34 @@ Užduoties tikslas: papildyti pirmąją darbo dalį (v0.1) merkle medžiu ir val
 <img width="742" height="840" alt="image" src="https://github.com/user-attachments/assets/c96f23ef-b845-4fa6-9bf7-a83788cfc864" />
 <img width="427" height="222" alt="image" src="https://github.com/user-attachments/assets/1595d337-034e-4be4-b3f2-e4d995c309ff" />
 
+b
+
+<img width="752" height="220" alt="image" src="https://github.com/user-attachments/assets/cf8bec7c-a578-45e8-b7c7-12c6e3343493" />
+
+
 (Kokie testai buvo tikrinami: )
 
 Šioje užduotyje atlikti Merkle medžio testai su 1/2/3/5 transakcijomis:
 
 <img width="760" height="330" alt="image" src="https://github.com/user-attachments/assets/cbecef4e-109e-4cb9-ad62-e6914fc10aca" />
+
+Pavyzdys: kelių blokų išvestys:
+
+<img width="823" height="425" alt="image" src="https://github.com/user-attachments/assets/6942a22c-3f1f-4d26-a5be-4549f6d0ed9d" />
+
+Galutinė suvestinė:
+
+<img width="492" height="255" alt="image" src="https://github.com/user-attachments/assets/7cd208cb-3e8b-4798-8e80-d18b84b9b3d9" />
+
+v0.3 užduotis: 
+
+Šią užduotį (papildomą failą v0.3.cpp) pilnai sugeneravo DI įrankis "COPILOT", keliose vietose užduotį tobulino įrankis "ChatGPT"
+
+Ką šioje užduotyje patobulino dirbtinis intelektas:
+
+Šioje užduotyje buvo tobulinami: Merkle medžio skaičiavimo efektyvumas; Validavimo klaidos
+
+<img width="745" height="373" alt="image" src="https://github.com/user-attachments/assets/f20dbf17-3483-4844-a55c-594a83d13434" />
+<img width="510" height="221" alt="image" src="https://github.com/user-attachments/assets/e6d4f636-5b05-4a5d-9902-f9f0c4a5944d" />
+
 
