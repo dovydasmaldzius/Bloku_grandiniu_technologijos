@@ -68,12 +68,9 @@ Užduoties tikslas: papildyti pirmąją darbo dalį (v0.1) merkle medžiu ir val
 <img width="742" height="840" alt="image" src="https://github.com/user-attachments/assets/c96f23ef-b845-4fa6-9bf7-a83788cfc864" />
 <img width="427" height="222" alt="image" src="https://github.com/user-attachments/assets/1595d337-034e-4be4-b3f2-e4d995c309ff" />
 
-b
-
 <img width="752" height="220" alt="image" src="https://github.com/user-attachments/assets/cf8bec7c-a578-45e8-b7c7-12c6e3343493" />
 
-
-(Kokie testai buvo tikrinami: )
+Kodo vietos, kuriose
 
 Šioje užduotyje atlikti Merkle medžio testai su 1/2/3/5 transakcijomis:
 
