@@ -42,6 +42,12 @@ PoW ir transakcijų duomenys patikrinami prieš įtraukiant bloką:
 
 (Parodoma, kad iš pirmo transakcijos turi būti patvirtintos, ir tik vėliau priimtos į bloką)
 
+Genesis ("nulinis") blokas, jo aprašymas ir išvestis:
+
+<img width="858" height="405" alt="image" src="https://github.com/user-attachments/assets/94b6746a-b653-4e76-aa85-360742f0a33b" />
+<img width="821" height="215" alt="image" src="https://github.com/user-attachments/assets/b09addd9-66b7-44d5-93ea-92bbcd898be4" />
+
+
 Pavyzdys: kelių blokų išvestys (imti pirmasis ir antrasis blokai):
 
 <img width="832" height="443" alt="image" src="https://github.com/user-attachments/assets/e995b3f6-39ac-49d1-9416-ad8b4834695e" />
