@@ -79,10 +79,9 @@ Validavimo testai tikrina:
 7) ar transakcija su pasikartojančiu transakcijos ID bus atmesta
 8) Ar transakcija sukelianti sveikojo skaičiaus perpildymą bus atmesta
 
-<img width="752" height="220" alt="image" src="https://github.com/user-attachments/assets/cf8bec7c-a578-45e8-b7c7-12c6e3343493" />
-
 Kodo vietos, kuriose yra transakcijų turinio ir tvarkos pakeitimo testai:
 
+<img width="752" height="220" alt="image" src="https://github.com/user-attachments/assets/cf8bec7c-a578-45e8-b7c7-12c6e3343493" />
 <img width="1180" height="205" alt="image" src="https://github.com/user-attachments/assets/4e07c73f-9daa-4059-bdb2-b5ea9c0c03e3" />
 <img width="1060" height="172" alt="image" src="https://github.com/user-attachments/assets/e76f5c90-bf7b-47c4-b70e-8c4e2b9fd7f4" />
 
