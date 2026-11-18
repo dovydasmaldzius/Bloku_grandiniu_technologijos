@@ -91,6 +91,8 @@ Kaip matome, pakeitus transakcijos turinį arba tvarką pasikeitė ir transakcij
 
 <img width="760" height="330" alt="image" src="https://github.com/user-attachments/assets/cbecef4e-109e-4cb9-ad62-e6914fc10aca" />
 
+Pastebime, kad esant skirtingam skaičiui transakcijų merkle medyje pasikeičia ir transakcijos šaknis (kadangi merkle medžio principas: iš kelių transakcijų padaroma viena bendra, ir jei pakeistume nors vieną transakciją pasikeistų visa bendra transakcijos šaknis.
+
 Pavyzdys: kelių blokų išvestys:
 
 <img width="823" height="425" alt="image" src="https://github.com/user-attachments/assets/6942a22c-3f1f-4d26-a5be-4549f6d0ed9d" />
