@@ -26,4 +26,19 @@ bool VerifyMerkleBlock(const Block& block); // patikrinamas vienas blokas su mer
 
 bool VerifyMerkleBlockchain(const vector<Block>& blockchain); // patikrinama visa blokų grandinė su merkle maiša
 
+struct MiningCandidateResult { // rezultatas, gautas kasant kandidatą
+size_t candidateNumber;
+Block block;
+uint64_t attemptedNonces;
+double miningTime;
+bool found; };
+
+vector<MiningCandidateResult> CreateMiningCandidates( // sukuriami keli kandidatų blokai su merkle maiša
+int height,
+const string& prevHash,
+const vector<Transaction>& poolTransactions,
+const vector<User>& confirmedUsers,
+int difficulty,
+uint64_t attemptLimit);
+
 #endif

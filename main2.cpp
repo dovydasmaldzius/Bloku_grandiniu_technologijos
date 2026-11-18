@@ -169,6 +169,56 @@ ValidationResult validation = ValidateTransactions(users, transactions);
 TestTransactionValidation();
 TestMerkleCases(validation.accepted);
 
+const string candidatePrevHash =
+string(64, '0');
+
+cout << "\nKandidatų kasimo testas (tos pačios būsena ir prev_hash):\n";
+vector<MiningCandidateResult> candidates =
+CreateMiningCandidates(
+1, candidatePrevHash, validation.accepted, users, 1, 200000);
+
+bool winnerFound = false;
+for (const MiningCandidateResult& candidate : candidates) {
+if (candidate.found) {
+winnerFound = true;
+break;
+}
+}
+if (!winnerFound) {
+cout << "Biudžetas 200000 nonce išnaudotas; tęsiama didinant iki 400000.\n";
+candidates = CreateMiningCandidates(
+1, candidatePrevHash, validation.accepted, users, 1, 400000);
+}
+
+size_t winnerIndex = candidates.size();
+double candidateTotalTime = 0.0;
+for (const MiningCandidateResult& candidate : candidates) {
+candidateTotalTime += candidate.miningTime;
+cout << "Kandidatas " << candidate.candidateNumber
+<< " | transakcijų " << candidate.block.transactions.size()
+<< " | bandymų " << candidate.attemptedNonces
+<< " | trukmė " << fixed << setprecision(6)
+<< candidate.miningTime << " s"
+<< " | " << (candidate.found ? "tinkamas" : "nerastas") << "\n";
+if (winnerIndex == candidates.size() && candidate.found) {
+winnerIndex = candidate.candidateNumber - 1;
+}
+}
+
+if (winnerIndex < candidates.size()) {
+const MiningCandidateResult& winner = candidates[winnerIndex];
+cout << "Laimėtojas: Kandidatas " << winner.candidateNumber
+<< "; pasirenkamas pagal griežtą tvarką 1, 2, 3, 4, 5.\n";
+cout << "Laimėtojo nonce: " << winner.block.nonce
+<< "; tx_root: " << winner.block.txRoot
+<< "; PoW maiša: " << winner.block.blockHash << "\n";
+cout << "Nelaimėjusių kandidatų balansas ir pool lieka nepakeisti.\n";
+} else {
+cout << "Laimėtojas nerastas bendroje riboje; didinti biudžetą, bet nesumažinti sudėtingumo.\n";
+}
+cout << "Kandidatų bendra trukmė: " << fixed << setprecision(6)
+<< candidateTotalTime << " s\n";
+
 vector<Block> blockchain = CreateMerkleBlockchain(validation.accepted, DIFFICULTY);
 
 cout << "\n";

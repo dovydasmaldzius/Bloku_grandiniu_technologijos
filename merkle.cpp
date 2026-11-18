@@ -3,6 +3,13 @@
 #include <chrono>
 #include <ctime>
 #include <utility>
+#include <atomic>
+#include <thread>
+#include <algorithm>
+#include <limits>
+#include <cctype>
+#include <unordered_map>
+#include <unordered_set>
 #include "merkle.h"
 #include "hash.h"
 
@@ -13,10 +20,13 @@ string bytes;
 
 if (hexValue.length() % 2 != 0) { // jei šešioliktainė simbolių eilutė turi nelyginį skaičių simbolių, grąžinama tuščia eilutė
 return ""; }
+if (hexValue.empty()) return "";
 
 bytes.reserve(hexValue.length() / 2); // rezervuojama vieta baitų eilutėje, kad būtų galima saugoti pusę šešioliktainės simbolių eilutės ilgio baitų
 
 for (size_t i = 0; i < hexValue.length(); i += 2) {
+if (!isxdigit(static_cast<unsigned char>(hexValue[i])) ||
+!isxdigit(static_cast<unsigned char>(hexValue[i + 1]))) return "";
 unsigned int value = 0;
 stringstream ss;
 ss << hex << hexValue.substr(i, 2);
@@ -102,6 +112,99 @@ chrono::duration<double> elapsed = end - start;
 
 block.miningTime = elapsed.count();
 return block; }
+
+vector<MiningCandidateResult> CreateMiningCandidates(
+int height,
+const string& prevHash,
+const vector<Transaction>& poolTransactions,
+const vector<User>& confirmedUsers,
+int difficulty,
+uint64_t attemptLimit) {
+vector<MiningCandidateResult> candidates(5);
+atomic<unsigned> nextCandidate(0);
+vector<thread> workers;
+
+const unsigned workerCount = min<unsigned>(5, thread::hardware_concurrency() ? 5 : 1); 
+for (unsigned workerId = 0; workerId < workerCount; ++workerId) {
+workers.emplace_back([&]() {
+for (;;) {
+const unsigned index = nextCandidate.fetch_add(1);
+if (index >= 5) break;
+
+vector<Transaction> selected;
+vector<User> temporaryUsers = confirmedUsers;
+unordered_map<string, size_t> userIndex;
+unordered_set<string> selectedIds;
+for (size_t i = 0; i < temporaryUsers.size(); ++i) {
+userIndex[temporaryUsers[i].id] = i;
+}
+
+size_t begin = static_cast<size_t>(index) * 20;
+size_t end = min(poolTransactions.size(), begin + 100);
+if (begin >= poolTransactions.size()) {
+begin = 0;
+end = min(poolTransactions.size(), size_t(100));
+}
+
+for (size_t i = begin; i < end && selected.size() < 100; ++i) {
+const Transaction& tx = poolTransactions[i];
+const auto sender = userIndex.find(tx.senderId);
+const auto receiver = userIndex.find(tx.receiverId);
+if (sender == userIndex.end() || receiver == userIndex.end() ||
+sender->first == receiver->first || tx.amount <= 0 ||
+selectedIds.find(tx.transactionId) != selectedIds.end()) continue;
+
+const string data = tx.senderId + "|" + tx.receiverId + "|" +
+to_string(tx.amount) + "|" + to_string(tx.sequence);
+if (tx.transactionId != HashHex(data)) continue;
+
+User& senderUser = temporaryUsers[sender->second];
+User& receiverUser = temporaryUsers[receiver->second];
+if (senderUser.balance < tx.amount ||
+receiverUser.balance > numeric_limits<int64_t>::max() - tx.amount) continue;
+
+senderUser.balance -= tx.amount;
+receiverUser.balance += tx.amount;
+selectedIds.insert(tx.transactionId);
+selected.push_back(tx);
+}
+
+Block block;
+block.height = height;
+block.prevHash = prevHash;
+block.timestamp = "2026-01-01 00:00:00";
+block.version = 1;
+block.transactions = selected;
+block.txRoot = CalculateMerkleRoot(selected);
+block.nonce = 0;
+block.difficulty = difficulty;
+block.miningAttempts = 0;
+block.miningTime = 0.0;
+
+const auto start = chrono::steady_clock::now();
+const string target(difficulty, '0');
+for (uint64_t nonce = 0; nonce < attemptLimit; ++nonce) {
+block.nonce = nonce;
+block.blockHash = CalculateMerkleBlockHash(block);
+++block.miningAttempts;
+if (block.blockHash.compare(0, difficulty, target) == 0) break;
+}
+
+block.miningTime =
+chrono::duration<double>(chrono::steady_clock::now() - start).count();
+const bool found =
+block.blockHash.compare(0, difficulty, target) == 0;
+
+candidates[index].candidateNumber = index + 1;
+candidates[index].block = move(block);
+candidates[index].attemptedNonces = candidates[index].block.miningAttempts;
+candidates[index].miningTime = candidates[index].block.miningTime;
+candidates[index].found = found;
+} });
+}
+for (thread& worker : workers) worker.join();
+return candidates;
+}
 
 vector<Block> CreateMerkleBlockchain(
 const vector<Transaction>& transactions,
