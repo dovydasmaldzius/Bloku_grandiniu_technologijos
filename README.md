@@ -70,9 +70,21 @@ Užduoties tikslas: papildyti pirmąją darbo dalį (v0.1) merkle medžiu ir val
 <img width="742" height="840" alt="image" src="https://github.com/user-attachments/assets/c96f23ef-b845-4fa6-9bf7-a83788cfc864" />
 <img width="427" height="222" alt="image" src="https://github.com/user-attachments/assets/1595d337-034e-4be4-b3f2-e4d995c309ff" />
 
+Validavimo testai tikrina:
+1) Ar galioja teisinga transakcija
+2) ir 3) - ar transakcija su nežinomu siuntėju/gavėju bus atmesta
+4) Ar kai transakcijos suma bus 0 ji bus atmesta
+5) Ar transakcija su neteisingu transakcijos ID bus atmesta
+6) Ar transakcija su nepakankamu siuntėjo balansu bus atmesta
+7) ar transakcija su pasikartojančiu transakcijos ID bus atmesta
+8) Ar transakcija sukelianti sveikojo skaičiaus perpildymą bus atmesta
+
 <img width="752" height="220" alt="image" src="https://github.com/user-attachments/assets/cf8bec7c-a578-45e8-b7c7-12c6e3343493" />
 
 Kodo vietos, kuriose yra transakcijų turinio ir tvarkos pakeitimo testai:
+
+<img width="1180" height="205" alt="image" src="https://github.com/user-attachments/assets/4e07c73f-9daa-4059-bdb2-b5ea9c0c03e3" />
+<img width="1060" height="172" alt="image" src="https://github.com/user-attachments/assets/e76f5c90-bf7b-47c4-b70e-8c4e2b9fd7f4" />
 
 Šioje užduotyje atlikti Merkle medžio testai su 1/2/3/5 transakcijomis:
 
@@ -99,7 +111,7 @@ Papildoma užduotis: Lygiagretus kasimas.
 
 Šiai užduočiai papildomai buvo sukurtas kodas lygiagretus_kasimas.cpp.
 
-Užduoties tikslas: 
+Užduoties tikslas: kandidatų kasimą (v0.2 užduotyje) pakeisti iš nuoseklaus į lygiagretų.
 
 <img width="865" height="133" alt="image" src="https://github.com/user-attachments/assets/85c87f05-1bfb-4048-b61a-a03b86e95e8c" />
 
