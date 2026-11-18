@@ -86,6 +86,8 @@ Kodo vietos, kuriose yra transakcijų turinio ir tvarkos pakeitimo testai:
 <img width="1180" height="205" alt="image" src="https://github.com/user-attachments/assets/4e07c73f-9daa-4059-bdb2-b5ea9c0c03e3" />
 <img width="1060" height="172" alt="image" src="https://github.com/user-attachments/assets/e76f5c90-bf7b-47c4-b70e-8c4e2b9fd7f4" />
 
+Kaip matome, pakeitus transakcijos turinį arba tvarką pasikeitė ir transakcijos šaknis.
+
 Šioje užduotyje atlikti Merkle medžio testai su 1/2/3/5 transakcijomis:
 
 <img width="760" height="330" alt="image" src="https://github.com/user-attachments/assets/cbecef4e-109e-4cb9-ad62-e6914fc10aca" />
