@@ -93,4 +93,10 @@ v0.3 užduotis:
 <img width="745" height="373" alt="image" src="https://github.com/user-attachments/assets/f20dbf17-3483-4844-a55c-594a83d13434" />
 <img width="510" height="221" alt="image" src="https://github.com/user-attachments/assets/e6d4f636-5b05-4a5d-9902-f9f0c4a5944d" />
 
+Papildoma užduotis: Lygiagretus kasimas.
+
+Šiai užduočiai papildomai buvo sukurtas kodas lygiagretus_kasimas.cpp.
+
+Užduoties tikslas: 
+
 
