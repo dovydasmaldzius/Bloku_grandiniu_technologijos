@@ -3,13 +3,20 @@
 #include <iomanip>
 #include <chrono>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include "hash.h"
 #include "blockchain.h"
 
 using namespace std;
 
-int main()
-{
+int main() {
+#ifdef _WIN32 
+SetConsoleOutputCP(CP_UTF8);
+#endif
+
     const uint32_t userSeed = 12345;
     const uint32_t transactionSeed = 12346;
 
@@ -42,49 +49,50 @@ auto programEnd = chrono::steady_clock::now();
 
 chrono::duration<double>totalTime = programEnd - programStart;
 
-cout << "Supaprastinta bloku grandine:\n";
-cout <<"\n                            \n";
-cout << "Vartotoju skaicius: " << users.size() << '\n';
-cout << "Sugeneruotu transakciju: " <<transactions.size()<< '\n';
-cout << "Priimtu transakciju: " << validation.accepted.size() << '\n';
-cout << "Atmestu transakciju: "<< validation.rejected.size() << '\n';
-cout << "Pradine bendra pinigu suma: " << initialFunds << '\n';
-cout << "Galutine bendra pinigu suma: " << finalFunds << '\n';
-cout << "Bendra suma nepakito: " << (initialFunds == finalFunds? "TAIP" : "NE") << "\n\n";
-cout <<"\n                            \n";
-cout << "Bloku grandine:\n";
-cout <<"\n                            \n";
+cout << "                             \n";
+cout << "Supaprastinta blokų grandinė:\n";
+cout << "                             \n";
+cout << "Vartotojų skaičius: " << users.size() << '\n';
+cout << "Sugeneruotų transakcijų skaičius: " <<transactions.size()<< '\n';
+cout << "Priimtų transakcijų: " << validation.accepted.size() << '\n';
+cout << "Atmestų transakcijų: "<< validation.rejected.size() << '\n';
+cout << "Pradinė bendra pinigų suma: " << initialFunds << '\n';
+cout << "Galutinė bendra pinigų suma: " << finalFunds << '\n';
+cout << "Bendra pinigų suma nepasikeitė: " << (initialFunds == finalFunds? "TAIP" : "NE") << "\n\n";
+cout << "                             \n";
+cout << "Blokų grandinė:\n";
+cout << "                             \n";
 
 for (const auto& block : blockchain) {
-cout << "\nBloko aukstis: " << block.height << '\n';
-cout << "Transakciju skaicius: " << block.transactions.size() << '\n';
-cout << "Prev hash: " << block.prevHash << '\n';
-cout << "Tx root: "<< block.txRoot << '\n';
-cout << "Block hash: " << block.blockHash << '\n';
-cout << "Difficulty: " << block.difficulty << '\n';
-cout << "Nonce: " << block.nonce << '\n';
-cout << "Mining attempts: " << block.miningAttempts << '\n';
-cout << "Mining time: " << fixed << setprecision(6) << block.miningTime << " s\n"; }
+cout << "\nBloko aukštis: " << block.height << '\n';
+cout << "Transakcijų skaičius: " << block.transactions.size() << '\n';
+cout << "Ankstesnio bloko maiša: " << block.prevHash << '\n';
+cout << "Merkle šaknis: "<< block.txRoot << '\n';
+cout << "Bloko maiša: " << block.blockHash << '\n';
+cout << "Sudėtingumas: " << block.difficulty << '\n';
+cout << "Nonce reikšmė: " << block.nonce << '\n';
+cout << "Kasimo bandymų skaičius: " << block.miningAttempts << '\n';
+cout << "Kasimo trukmė: " << fixed << setprecision(6) << block.miningTime << " s\n"; }
 
 bool blockchainValid = VerifyBlockchain(blockchain);
 
 cout <<"\n                            \n";
-cout << "Grandines tikrinimas:\n";
-cout << "Blockchain validi: " << (blockchainValid ? "TAIP" : "NE") << '\n';
+cout << "Grandinės tikrinimas:\n";
+cout << "Blokų grandinė galiojanti: " << (blockchainValid ? "TAIP" : "NE") << '\n';
 cout <<"\n                            \n";
-cout << "Galutine suvestine:\n";
+cout << "Galutinė suvestinė:\n";
 cout <<"\n                            \n";
-cout << "Vartotoju: " << users.size() << '\n';
-cout << "Sugeneruotu transakciju: " << transactions.size() << '\n';
-cout << "Priimtu transakciju: " << validation.accepted.size() << '\n';
-cout << "Atmestu transakciju: " << validation.rejected.size() << '\n';
-cout << "Bloku iskaitant genesis: " << blockchain.size() << '\n';
-cout << "Difficulty: " << difficulty << '\n';
-cout << "Pradine pinigu suma: "<< initialFunds<< '\n';
-cout << "Galutine pinigu suma: " << finalFunds << '\n';
-cout << "Pinigai nepradingo: " << (initialFunds == finalFunds ? "TAIP" : "NE") << '\n';
-cout<< "Blockchain validi: "<< (blockchainValid ? "TAIP" : "NE") << '\n';
-cout << "Visa programa truko: " << fixed << setprecision(6) << totalTime.count() << " s\n";
+cout << "Vartotojų: " << users.size() << '\n';
+cout << "Sugeneruotų transakcijų: " << transactions.size() << '\n';
+cout << "Priimtų transakcijų: " << validation.accepted.size() << '\n';
+cout << "Atmestų transakcijų: " << validation.rejected.size() << '\n';
+cout << "Blokų, įskaitant pradinį bloką: " << blockchain.size() << '\n';
+cout << "Sudėtingumas: " << difficulty << '\n';
+cout << "Pradinė pinigų suma: "<< initialFunds<< '\n';
+cout << "Galutinė pinigų suma: " << finalFunds << '\n';
+cout << "Pinigų suma nepasikeitė: " << (initialFunds == finalFunds ? "TAIP" : "NE") << '\n';
+cout<< "Blokų grandinė galiojanti: "<< (blockchainValid ? "TAIP" : "NE") << '\n';
+cout << "Visos programos veikimo trukmė: " << fixed << setprecision(6) << totalTime.count() << " s\n";
 
 return 0;
 }
