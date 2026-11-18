@@ -14,12 +14,8 @@ v0.3: terminale įrašomos eilutės: g++ -std=c++17 -O2 -Wall -Wextra -pedantic 
 
 lygiagretus_kasimas (papildoma užduotis): terminale įrašomos eilutės: g++ -std=c++11 -O2 -pthread lygiagretus_kasimas.cpp hash.cpp -o lygiagretus_kasimas.exe ir .\lygiagretus_kasimas.exe;
 
-Modelio aprašymas: 
-
-
-
 v0.1 užduotis
-Užduoties tikslas: . Šiai užduočiai sukurti failai: hash.h ir hash.cpp (ankstesnės užduoties hash funkcija, išskirstyta į dalis); blockchain.h ir blockchain.cpp; main.cpp.
+Užduoties tikslas: sukurti supaprastintą blokų grandinę, generuojančią vartotojus/transakcijas, formuojančią blokus, ieškančią PoW, tikrinančią duomenis ir atnaujinančią grandinės būseną. Šiai užduočiai sukurti failai: hash.h ir hash.cpp (ankstesnės užduoties hash funkcija, išskirstyta į dalis); blockchain.h ir blockchain.cpp; main.cpp.
 
 Pastaba: naudotas kasimo sudėtingumas - 3.
 
