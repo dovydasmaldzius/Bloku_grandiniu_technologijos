@@ -93,6 +93,10 @@ Kaip matome, pakeitus transakcijos turinį arba tvarką pasikeitė ir transakcij
 
 Pastebime, kad esant skirtingam skaičiui transakcijų merkle medyje pasikeičia ir transakcijos šaknis (kadangi merkle medžio principas: iš kelių transakcijų padaroma viena bendra, ir jei pakeistume nors vieną transakciją pasikeistų visa bendra transakcijos šaknis.
 
+Pastaba: kandidatų kasimo testą padėjo sukurti DI įrankiai "COPILOT" ir "ChatGPT".
+
+<img width="1052" height="162" alt="image" src="https://github.com/user-attachments/assets/fb062f5c-9c40-4c07-ac4b-6d45f2d44a6b" />
+
 Pavyzdys: kelių blokų išvestys:
 
 <img width="823" height="425" alt="image" src="https://github.com/user-attachments/assets/6942a22c-3f1f-4d26-a5be-4549f6d0ed9d" />
@@ -110,12 +114,17 @@ v0.3 užduotis:
 <img width="745" height="373" alt="image" src="https://github.com/user-attachments/assets/f20dbf17-3483-4844-a55c-594a83d13434" />
 <img width="510" height="221" alt="image" src="https://github.com/user-attachments/assets/e6d4f636-5b05-4a5d-9902-f9f0c4a5944d" />
 
+Pagrindiniai DI patobulinimai šioje užduotyje:
+
+1) Įvestos konkrečios transakcijos atmetimo priežastys:
+2) Pagerintas Merkle medžio saugumas:
+3) Difficulity (kasimo sunkumo) patikra:
+
 Papildoma užduotis: Lygiagretus kasimas.
 
 Šiai užduočiai papildomai buvo sukurtas kodas lygiagretus_kasimas.cpp.
 
 Užduoties tikslas: kandidatų kasimą (v0.2 užduotyje) pakeisti iš nuoseklaus į lygiagretų.
 
-<img width="865" height="133" alt="image" src="https://github.com/user-attachments/assets/85c87f05-1bfb-4048-b61a-a03b86e95e8c" />
+<img width="1007" height="155" alt="image" src="https://github.com/user-attachments/assets/f2cd3e2a-8f34-4253-9723-05293eb23ad5" />
 
-Kaip matome, beveik 4 kartus padidėjo užduoties efektyvumas.
