@@ -4,7 +4,12 @@
 #include <string>
 #include <cstdint>
 #include <limits>
-
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
 #include "blockchain.h"
 #include "merkle.h"
 #include "hash.h"
@@ -12,68 +17,66 @@
 
 using namespace std;
 
-void TestMerkleCases(
-const vector<Transaction>& transactions) {
+void TestMerkleCases(const vector<Transaction>& transactions) { // testuojami merkle medžio atvejai
 cout << "\n";
-cout << "==============================\n";
-cout << "MERKLE MEDZIO TESTAI\n";
-cout << "==============================\n";
+cout << "                    \n";
+cout << "Merkle medžio testai\n";
+cout << "                    \n";
 
-vector<int> testSizes = {1, 2, 3, 5};
+vector<int> testSizes = {1, 2, 3, 5}; // testuojami atvejai su 1, 2, 3 ir 5 transakcijomis
 
 for (int count : testSizes) {
 if (transactions.size() < static_cast<size_t>(count)) {
 continue; }
 
-vector<Transaction> testTransactions(transactions.begin(),transactions.begin() + count);
+vector<Transaction> testTransactions(transactions.begin(),transactions.begin() + count); // suformuojamas transakcijų vektorius su nurodytu transakcijų skaičiumi
 
-string root = CalculateMerkleRoot(testTransactions);
+string root = CalculateMerkleRoot(testTransactions); // skaičiuojama merkle šaknis
 
-cout << "\n" << "Transakciju skaicius: " << count << "\n";
+cout << "\n" << "Transakcijų skaičius: " << count << "\n";
 
-cout <<"Merkle root:"<< root << "\n"; }
+cout << "Merkle šaknis: "<< root << "\n"; }
 
 if (transactions.size() >= 2) {
-
 vector<Transaction> original = {
 transactions[0],transactions[1] };
-string rootOriginal = CalculateMerkleRoot(original);
+string rootOriginal = CalculateMerkleRoot(original); // skaičiuojama merkle šaknis su originaliomis transakcijomis
 
 vector<Transaction> changed = original;
 changed[0].amount++;
 string data = changed[0].senderId + "|" + changed[0].receiverId + "|" + to_string(changed[0].amount) + "|" + to_string(changed[0].sequence);
 changed[0].transactionId = HashHex(data);
-string rootChanged = CalculateMerkleRoot(changed);
+string rootChanged = CalculateMerkleRoot(changed); // skaičiuojama merkle šaknis su pakeista transakcija
 
 cout << "\n";
 cout << "Transakcijos turinio pakeitimo testas:\n";
-cout <<"Senas root:   "<< rootOriginal << "\n";
-cout<< "Naujas root:   " << rootChanged << "\n";
-cout << "Root pasikeite: " << (rootOriginal != rootChanged ? "TAIP" : "NE")<< "\n"; }
+cout <<"Sena šaknis: "<< rootOriginal << "\n";
+cout<< "Nauja šaknis: " << rootChanged << "\n";
+cout << "Šaknis pasikeitė: " << (rootOriginal != rootChanged ? "TAIP" : "NE")<< "\n"; }
 
 if (transactions.size() >= 2) {
 vector<Transaction> original = {
 transactions[0], transactions[1] };
-string rootOriginal = CalculateMerkleRoot(original);
+string rootOriginal = CalculateMerkleRoot(original); // skaičiuojama merkle šaknis su originaliomis transakcijomis
 
 vector<Transaction> reversed = {
 transactions[1], transactions[0] };
-string rootReversed = CalculateMerkleRoot(reversed);
+string rootReversed = CalculateMerkleRoot(reversed); // skaičiuojama merkle šaknis su transakcijomis, kurių tvarka pakeista
 
 cout <<"\n";
-cout << "Transakciju tvarkos pakeitimo testas:\n";
-cout << "Senas root:   "<< rootOriginal << "\n";
-cout << "Naujas root:   " << rootReversed << "\n";
-cout << "Root pasikeite: " << (rootOriginal != rootReversed ? "TAIP" : "NE") << "\n"; } }
+cout << "Transakcijų tvarkos pakeitimo testas:\n";
+cout << "Sena šaknis: "<< rootOriginal << "\n";
+cout << "Nauja šaknis: " << rootReversed << "\n";
+cout << "Šaknis pasikeitė: "<< (rootOriginal != rootReversed ? "TAIP" : "NE") << "\n"; } }
 
 void TestTransactionValidation() {
-cout << "\n========== V0.2 TRANSAKCIJU VALIDAVIMO TESTAI ==========\n";
+cout << "\nTransakcijų validavimo testai: \n";
 vector<User> users = {
 {"user_0001", "key1", 1000},
 {"user_0002", "key2", 500},
 {"user_0003", "key3", 100} };
 
-Transaction validTx;
+Transaction validTx; // testuojama, ar galioja teisinga transakcija
 validTx.senderId = "user_0001";
 validTx.receiverId = "user_0002";
 validTx.amount = 100;
@@ -81,55 +84,54 @@ validTx.sequence = 1;
 string data = validTx.senderId + "|" +
 validTx.receiverId + "|" + to_string(validTx.amount) + "|" + to_string(validTx.sequence);
 validTx.transactionId = HashHex(data);
-
 auto result = ValidateTransactions(users, {validTx});
-cout <<"Teisinga transakcija: " << (result.accepted.size() == 1 ? "TAIP" : "NE") << "\n";
+cout <<"Galiojanti transakcija: " << (result.accepted.size() == 1 ? "TAIP" : "NE") << "\n";
 
-Transaction unknownSender = validTx;
+Transaction unknownSender = validTx; // testuojama, ar transakcija su nežinomu siuntėju bus atmesta
 unknownSender.senderId = "user_9999";
 data = unknownSender.senderId + "|" + unknownSender.receiverId + "|" + to_string(unknownSender.amount) + "|" + to_string(unknownSender.sequence);
 unknownSender.transactionId = HashHex(data);
 result = ValidateTransactions(users, {unknownSender});
-cout<< "Nezinomas siuntejas: " << (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n";
+cout<<"Nežinomas siuntėjas: " << (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n";
 
-Transaction unknownReceiver = validTx;
+Transaction unknownReceiver = validTx; // testuojama, ar transakcija su nežinomu gavėju bus atmesta
 unknownReceiver.receiverId = "user_9999";
 data = unknownReceiver.senderId + "|" + unknownReceiver.receiverId + "|" + to_string(unknownReceiver.amount) + "|" + to_string(unknownReceiver.sequence);
 unknownReceiver.transactionId = HashHex(data);
 result = ValidateTransactions(users, {unknownReceiver});
-cout << "Nezinomas gavejas: "<< (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n";
+cout << "Nežinomas gavėjas: "<< (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n";
 
-Transaction zeroAmount = validTx;
+Transaction zeroAmount = validTx; // testuojama, ar transakcija su nuliu kaip transakcijos suma bus atmesta
 zeroAmount.amount = 0;
 data = zeroAmount.senderId + "|" + zeroAmount.receiverId + "|" + to_string(zeroAmount.amount) + "|" + to_string(zeroAmount.sequence);
 zeroAmount.transactionId = HashHex(data);
 result = ValidateTransactions(users, {zeroAmount});
-cout << "Neteisinga suma (0): " << (result.rejected.size() == 1 ? "TAIP" :"NE") << "\n";
+cout <<"Neteisinga suma (0): " << (result.rejected.size() == 1 ? "TAIP" :"NE") << "\n";
 
-Transaction invalidId = validTx;
+Transaction invalidId = validTx; // testuojama, ar transakcija su neteisingu transakcijos ID bus atmesta
 invalidId.transactionId = "1234567890abcdef";
-result = ValidateTransactions(users, {invalidId});
-cout << "Neteisingas transaction ID: " << (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n";
+result= ValidateTransactions(users, {invalidId});
+cout << "Neteisingas transakcijos ID: " << (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n";
 
-Transaction insufficient = validTx;
+Transaction insufficient = validTx; // testuojama, ar transakcija su nepakankamu siuntėjo balansu bus atmesta
 insufficient.amount = 5000;
 data = insufficient.senderId + "|" + insufficient.receiverId + "|" + to_string(insufficient.amount) + "|" + to_string(insufficient.sequence);
 insufficient.transactionId = HashHex(data);
 result = ValidateTransactions(users, {insufficient});
-cout << "Nepakankamas balansas: " << (result.rejected.size() == 1 ? "TAIP": "NE")<< "\n";
+cout << "Nepakankamas balansas: "<< (result.rejected.size() == 1 ? "TAIP": "NE")<< "\n";
 
-Transaction duplicate1 = validTx;
+Transaction duplicate1 = validTx; // testuojama, ar transakcija su pasikartojančiu transakcijos ID bus atmesta
 Transaction duplicate2 = validTx;
 duplicate2.sequence = 2;
 duplicate2.transactionId = duplicate1.transactionId;
 result = ValidateTransactions(users, {duplicate1, duplicate2});
-cout << "Dubliuotas transaction ID: " << (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n"; 
+cout << "Pasikartojantis transakcijos ID: " << (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n"; 
 
 vector<User> overflowUsers = {
 {"user_0001", "key1", 1000},
 {"user_0002", "key2", numeric_limits<int64_t>::max()} };
 
-Transaction overflowTx;
+Transaction overflowTx; // testuojama, ar transakcija, kuri sukelia sveikojo skaičiaus perpildymą, bus atmesta
 overflowTx.senderId = "user_0001";
 overflowTx.receiverId = "user_0002";
 overflowTx.amount = 100;
@@ -137,16 +139,20 @@ overflowTx.sequence = 1;
 data = overflowTx.senderId + "|" + overflowTx.receiverId + "|" + to_string(overflowTx.amount) + "|" + to_string(overflowTx.sequence);
 overflowTx.transactionId = HashHex(data);
 result = ValidateTransactions(overflowUsers, {overflowTx});
-cout << "Integer overflow: " << (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n"; }
+cout << "Sveikojo skaičiaus perpildymas: " << (result.rejected.size() == 1 ? "TAIP" : "NE") << "\n"; }
 
 
 
 int main() {
 
-cout << "==============================\n";
-cout << "SUPAPRASTINTA BLOKU GRANDINE\n";
-cout << "V0.2 - MERKLE MEDIS\n";
-cout << "==============================\n";
+#ifdef _WIN32
+SetConsoleOutputCP(CP_UTF8);
+#endif
+
+cout << "                    \n";
+cout << "Supaprastinta blokų grandinė: \n";
+cout << "Merkle medis: \n";
+cout << "                    \n";
 
 const int USER_COUNT = 1000;
 const int TRANSACTION_COUNT = 10000;
@@ -163,25 +169,75 @@ ValidationResult validation = ValidateTransactions(users, transactions);
 TestTransactionValidation();
 TestMerkleCases(validation.accepted);
 
+const string candidatePrevHash =
+string(64, '0');
+
+cout << "\nKandidatų kasimo testas (tos pačios būsena ir prev_hash):\n";
+vector<MiningCandidateResult> candidates =
+CreateMiningCandidates(
+1, candidatePrevHash, validation.accepted, users, 1, 200000);
+
+bool winnerFound = false;
+for (const MiningCandidateResult& candidate : candidates) {
+if (candidate.found) {
+winnerFound = true;
+break;
+}
+}
+if (!winnerFound) {
+cout << "Biudžetas 200000 nonce išnaudotas; tęsiama didinant iki 400000.\n";
+candidates = CreateMiningCandidates(
+1, candidatePrevHash, validation.accepted, users, 1, 400000);
+}
+
+size_t winnerIndex = candidates.size();
+double candidateTotalTime = 0.0;
+for (const MiningCandidateResult& candidate : candidates) {
+candidateTotalTime += candidate.miningTime;
+cout << "Kandidatas " << candidate.candidateNumber
+<< " | transakcijų " << candidate.block.transactions.size()
+<< " | bandymų " << candidate.attemptedNonces
+<< " | trukmė " << fixed << setprecision(6)
+<< candidate.miningTime << " s"
+<< " | " << (candidate.found ? "tinkamas" : "nerastas") << "\n";
+if (winnerIndex == candidates.size() && candidate.found) {
+winnerIndex = candidate.candidateNumber - 1;
+}
+}
+
+if (winnerIndex < candidates.size()) {
+const MiningCandidateResult& winner = candidates[winnerIndex];
+cout << "Laimėtojas: Kandidatas " << winner.candidateNumber
+<< "; pasirenkamas pagal griežtą tvarką 1, 2, 3, 4, 5.\n";
+cout << "Laimėtojo nonce: " << winner.block.nonce
+<< "; tx_root: " << winner.block.txRoot
+<< "; PoW maiša: " << winner.block.blockHash << "\n";
+cout << "Nelaimėjusių kandidatų balansas ir pool lieka nepakeisti.\n";
+} else {
+cout << "Laimėtojas nerastas bendroje riboje; didinti biudžetą, bet nesumažinti sudėtingumo.\n";
+}
+cout << "Kandidatų bendra trukmė: " << fixed << setprecision(6)
+<< candidateTotalTime << " s\n";
+
 vector<Block> blockchain = CreateMerkleBlockchain(validation.accepted, DIFFICULTY);
 
 cout << "\n";
-cout << "==============================\n";
-cout << "BLOKU GRANDINE\n";
-cout << "==============================\n";
+cout << "                    \n";
+cout << "Blokų grandinė: \n";
+cout << "                    \n";
 
 for (const auto& block : blockchain) {
 cout << "\n";
-cout<< "Bloko aukstis: " << block.height << "\n";
-cout <<"Transakciju skaicius: " << block.transactions.size() << "\n";
-cout << "Prev hash: " << block.prevHash << "\n";
-cout << "Merkle root: " << block.txRoot << "\n";
-cout << "Block hash: " << block.blockHash << "\n";
-cout << "Difficulty: "<< block.difficulty << "\n";
-cout << "Nonce: " << block.nonce << "\n";
-cout << "Mining attempts: "<< block.miningAttempts << "\n";
-cout << fixed<< setprecision(6);
-cout << "Mining time: "<< block.miningTime << " s\n"; }
+cout << "Bloko aukštis: " << block.height << "\n";
+cout << "Transakcijų skaičius: " << block.transactions.size() << "\n";
+cout << "Ankstesnio bloko maiša: " << block.prevHash << "\n";
+cout << "Merkle šaknis: " << block.txRoot << "\n";
+cout << "Bloko maiša: " << block.blockHash << "\n";
+cout << "Sudėtingumas: "<< block.difficulty << "\n";
+cout << "Nonce reikšmė: " << block.nonce << "\n";
+cout << "Kasimo bandymų skaičius: "<< block.miningAttempts << "\n";
+cout <<fixed<< setprecision(6);
+cout << "Kasimo trukmė: "<< block.miningTime << " s\n"; }
 
 bool valid = VerifyMerkleBlockchain(blockchain);
 
@@ -195,19 +251,19 @@ for (const auto& user : validation.finalUsers) {
 finalTotal += user.balance; }
 
 cout << "\n";
-cout << "==============================\n";
-cout << "GALUTINE SUVESTINE\n";
-cout <<"==============================\n";
-cout << "Vartotoju skaicius: "<< users.size() << "\n";
-cout << "Sugeneruotu transakciju: " << transactions.size() << "\n";
-cout << "Priimtu transakciju: " << validation.accepted.size() << "\n";
-cout << "Atmestu transakciju: "<< validation.rejected.size() << "\n";
-cout << "Pradine bendra pinigu suma: " << initialTotal <<"\n";
-cout << "Galutine bendra pinigu suma: " << finalTotal << "\n";
+cout << "                    \n";
+cout << "Galutinė suvestinė: \n";
+cout << "                    \n";
+cout << "Vartotojų skaičius: "<< users.size() << "\n";
+cout << "Sugeneruotų transakcijų: " << transactions.size() << "\n";
+cout << "Priimtų transakcijų: " << validation.accepted.size() << "\n";
+cout << "Atmestų transakcijų: "<< validation.rejected.size() << "\n";
+cout << "Pradinė bendra pinigų suma: " << initialTotal <<"\n";
+cout << "Galutinė bendra pinigų suma: " << finalTotal << "\n";
 cout << "Bendra suma nepakito: " << (initialTotal == finalTotal? "TAIP": "NE")<< "\n";
-cout << "Bloku iskaitant genesis: " << blockchain.size() << "\n";
-cout << "I blockchain ideta transakciju: " << validation.accepted.size() << "\n";
-cout << "Blockchain validi: " << (valid ? "TAIP" : "NE") << "\n";
+cout << "Blokų, įskaitant pradinį bloką: " << blockchain.size() << "\n";
+cout << "Į blokų grandinę įtrauktų transakcijų: " << validation.accepted.size() << "\n";
+cout << "Blokų grandinė galiojanti: " << (valid ? "TAIP" : "NE") << "\n";
 
 return 0;
 }
