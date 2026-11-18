@@ -9,6 +9,12 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+#ifdef _WIN32
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
 
 #include "blockchain.h"
 #include "hash.h"
@@ -89,51 +95,51 @@ static ValidationResultV03 ValidateTransactionsV03(
 
     for (const Transaction& tx : transactions) {
         if (duplicateUserId) {
-            reject(tx, "Duplicate user ID makes account lookup ambiguous");
+            reject(tx, "Pasikartojantis vartotojo ID neleidžia vienareikšmiškai rasti paskyros");
             continue;
         }
 
         const auto senderIt = userIndex.find(tx.senderId);
         if (senderIt == userIndex.end()) {
-            reject(tx, "Unknown sender");
+            reject(tx, "Nežinomas siuntėjas");
             continue;
         }
 
         const auto receiverIt = userIndex.find(tx.receiverId);
         if (receiverIt == userIndex.end()) {
-            reject(tx, "Unknown receiver");
+            reject(tx, "Nežinomas gavėjas");
             continue;
         }
 
         if (tx.senderId == tx.receiverId) {
-            reject(tx, "Sender and receiver must differ");
+            reject(tx, "Siuntėjas ir gavėjas turi skirtis");
             continue;
         }
 
         if (tx.amount <= 0) {
-            reject(tx, "Amount must be positive");
+            reject(tx, "Suma turi būti teigiama");
             continue;
         }
 
         if (tx.transactionId != HashHex(TransactionDataV03(tx))) {
-            reject(tx, "Transaction ID does not match transaction contents");
+            reject(tx, "Transakcijos ID neatitinka jos turinio");
             continue;
         }
 
         if (!seenIds.insert(tx.transactionId).second) {
-            reject(tx, "Transaction ID has already been processed");
+            reject(tx, "Ši transakcija jau apdorota");
             continue;
         }
 
         User& sender = result.finalUsers[senderIt->second];
         User& receiver = result.finalUsers[receiverIt->second];
         if (sender.balance < tx.amount) {
-            reject(tx, "Insufficient sender balance in execution order");
+            reject(tx, "Siuntėjo balanso nepakanka pagal vykdymo tvarką");
             continue;
         }
 
         if (receiver.balance > numeric_limits<int64_t>::max() - tx.amount) {
-            reject(tx, "Receiver balance would overflow");
+            reject(tx, "Gavėjo balanso reikšmė viršytų leistiną ribą");
             continue;
         }
 
@@ -209,7 +215,7 @@ static string CalculateMerkleRootV03(const vector<Transaction>& transactions) {
 
             string parent;
             if (!DecodeHexV03(HashHex(combined), parent)) {
-                throw runtime_error("HashHex returned invalid hexadecimal output");
+                throw runtime_error("HashHex funkcija grąžino netinkamą šešioliktainę reikšmę");
             }
             level[output++] = move(parent);
         }
@@ -244,7 +250,7 @@ static Block MineBlockV03(
     int difficulty,
     const string& timestamp) {
     if (difficulty < 0 || difficulty > 64) {
-        throw invalid_argument("Difficulty must be between 0 and 64");
+        throw invalid_argument("Sudėtingumas turi būti nuo 0 iki 64");
     }
 
     Block block{};
@@ -254,7 +260,7 @@ static Block MineBlockV03(
     block.version = 1;
     block.txRoot = CalculateMerkleRootV03(transactions);
     if (block.txRoot.empty()) {
-        throw invalid_argument("A transaction contains an invalid ID");
+        throw invalid_argument("Transakcijoje yra netinkamas ID");
     }
     block.transactions = transactions;
     block.difficulty = difficulty;
@@ -266,7 +272,7 @@ static Block MineBlockV03(
             break;
         }
         if (block.nonce == numeric_limits<uint64_t>::max()) {
-            throw overflow_error("Nonce space exhausted before finding proof of work");
+            throw overflow_error("Nonce reikšmių sritis išnaudota neradus darbo įrodymo");
         }
         ++block.nonce;
     }
@@ -278,7 +284,7 @@ static vector<Block> CreateBlockchainV03(
     const vector<Transaction>& transactions,
     int difficulty) {
     if (difficulty < 0 || difficulty > 64) {
-        throw invalid_argument("Difficulty must be between 0 and 64");
+        throw invalid_argument("Sudėtingumas turi būti nuo 0 iki 64");
     }
 
     vector<Block> chain;
@@ -345,7 +351,7 @@ static bool VerifyBlockchainV03(const vector<Block>& chain) {
 static bool RunCorrectnessTestsV03() {
     size_t failures = 0;
     const auto check = [&failures](const string& name, bool passed) {
-        cout << (passed ? "[OK] " : "[FAIL] ") << name << '\n';
+        cout << (passed ? "[GERAI] " : "[KLAIDA] ") << name << '\n';
         failures += passed ? 0 : 1;
     };
 
@@ -358,7 +364,7 @@ static bool RunCorrectnessTestsV03() {
         "user_0001", "user_0002", 100, 1);
     const ValidationResultV03 validResult =
         ValidateTransactionsV03(users, {valid});
-    check("Valid payment included once; balances and total are correct",
+    check("Galiojantis mokėjimas įtraukiamas vieną kartą; likučiai ir suma teisingi",
         validResult.accepted.size() == 1 &&
         validResult.finalUsers[0].balance == 900 &&
         validResult.finalUsers[1].balance == 600 &&
@@ -381,17 +387,17 @@ static bool RunCorrectnessTestsV03() {
     const auto zeroResult = ValidateTransactionsV03(users, {zeroAmount});
     const auto negativeResult = ValidateTransactionsV03(users, {negativeAmount});
     const auto changedIdResult = ValidateTransactionsV03(users, {changedId});
-    check("Unknown receiver is rejected with a reason",
+    check("Nežinomas gavėjas atmetamas nurodant priežastį",
         unknownResult.rejected.size() == 1 &&
-        unknownResult.rejected[0].reason == "Unknown receiver");
-    check("Unknown sender is rejected with a reason",
+        unknownResult.rejected[0].reason == "Nežinomas gavėjas");
+    check("Nežinomas siuntėjas atmetamas nurodant priežastį",
         unknownSenderResult.rejected.size() == 1 &&
-        unknownSenderResult.rejected[0].reason == "Unknown sender");
-    check("Zero and negative amounts are rejected with reasons",
+        unknownSenderResult.rejected[0].reason == "Nežinomas siuntėjas");
+    check("Nulinės ir neigiamos sumos atmetamos nurodant priežastį",
         zeroResult.rejected.size() == 1 && !zeroResult.rejected[0].reason.empty() &&
         negativeResult.rejected.size() == 1 &&
         !negativeResult.rejected[0].reason.empty());
-    check("Changed transaction ID is rejected with a reason",
+    check("Pakeistas transakcijos ID atmetamas nurodant priežastį",
         changedIdResult.rejected.size() == 1 &&
         !changedIdResult.rejected[0].reason.empty());
 
@@ -404,7 +410,7 @@ static bool RunCorrectnessTestsV03() {
         MakeTransactionV03("sender", "receiver", 30, 2);
     const auto orderedResult =
         ValidateTransactionsV03(limitedUsers, {firstSpend, secondSpend});
-    check("Overspending batch follows execution order",
+    check("Per didelės išlaidos tikrinamos pagal vykdymo tvarką",
         orderedResult.accepted.size() == 1 &&
         orderedResult.rejected.size() == 1 &&
         orderedResult.finalUsers[0].balance == 20);
@@ -413,7 +419,7 @@ static bool RunCorrectnessTestsV03() {
     const unordered_set<string> alreadyConfirmed = {valid.transactionId};
     const auto confirmedResult =
         ValidateTransactionsV03(users, {valid}, alreadyConfirmed);
-    check("Duplicate and previously confirmed IDs are not credited twice",
+    check("Pasikartojantys ir anksčiau patvirtinti ID neįskaitomi du kartus",
         duplicateResult.accepted.size() == 1 &&
         duplicateResult.rejected.size() == 1 &&
         confirmedResult.accepted.empty() &&
@@ -425,7 +431,7 @@ static bool RunCorrectnessTestsV03() {
         MakeTransactionV03("sender", "receiver", 1, 1);
     const auto overflowResult =
         ValidateTransactionsV03(overflowUsers, {overflowPayment});
-    check("Receiver balance overflow is rejected",
+    check("Gavėjo balanso perpildymas atmetamas",
         overflowResult.accepted.empty() && overflowResult.rejected.size() == 1);
 
     vector<Transaction> validMerkleTransactions;
@@ -441,12 +447,12 @@ static bool RunCorrectnessTestsV03() {
         merkleMatchesV02 = merkleMatchesV02 &&
             CalculateMerkleRootV03(sample) == CalculateMerkleRoot(sample);
     }
-    check("Merkle roots for 1/2/3/5 leaves match v0.2",
+    check("Merkle šaknys su 1, 2, 3 ir 5 lapais sutampa su v0.2",
         merkleMatchesV02);
 
     Transaction malformedLeaf = valid;
     malformedLeaf.transactionId = "not-hex";
-    check("Malformed Merkle leaf is rejected",
+    check("Netinkamas Merkle medžio lapas atmetamas",
         CalculateMerkleRootV03({malformedLeaf}).empty());
 
     Block fixture{};
@@ -458,15 +464,15 @@ static bool RunCorrectnessTestsV03() {
     fixture.transactions = {valid};
     fixture.difficulty = 0;
     fixture.blockHash = CalculateBlockHashV03(fixture);
-    check("Unmodified block verifies", VerifyBlockV03(fixture));
+    check("Nepakeistas blokas patikrinamas", VerifyBlockV03(fixture));
 
     Block changedContents = fixture;
     changedContents.transactions[0].amount++;
-    check("Changed block contents are rejected",
+    check("Pakeistas bloko turinys atmetamas",
         !VerifyBlockV03(changedContents));
     Block changedPreviousHash = fixture;
     changedPreviousHash.prevHash[0] = 'b';
-    check("Changed previous hash is rejected",
+    check("Pakeista ankstesnio bloko maiša atmetama",
         !VerifyBlockV03(changedPreviousHash));
 
     Block invalidProof = fixture;
@@ -478,7 +484,7 @@ static bool RunCorrectnessTestsV03() {
         }
         ++invalidProof.nonce;
     }
-    check("Block with a correctly hashed but invalid PoW is rejected",
+    check("Blokas su teisinga maiša, bet negaliojančiu darbo įrodymu atmetamas",
         !VerifyBlockV03(invalidProof));
 
     const Block candidateA = MineBlockV03(
@@ -486,17 +492,21 @@ static bool RunCorrectnessTestsV03() {
     const Block candidateB = MineBlockV03(
         1, string(64, 'b'), {validMerkleTransactions[0]}, 1,
         "2026-01-01 00:00:00");
-    check("Independent mining candidates keep their own roots and state",
+    check("Atskiri kasimo kandidatai išlaiko savo šaknis ir būseną",
         candidateA.txRoot == CalculateMerkleRootV03({valid}) &&
         candidateB.txRoot == CalculateMerkleRootV03({validMerkleTransactions[0]}) &&
         VerifyBlockV03(candidateA) && VerifyBlockV03(candidateB));
 
-    cout << "Correctness tests failed: " << failures << '\n';
+    cout << "Nepavykusių teisingumo testų: " << failures << '\n';
     return failures == 0;
 }
 
 int main(int argc, char* argv[]) {
-    cout << "v0.3 - AI-assisted review; fixed v0.2 reference behavior\n";
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+#endif
+
+    cout << "v0.3 – peržiūra atlikta naudojant DI; išsaugota v0.2 etaloninė elgsena\n";
     if (!RunCorrectnessTestsV03()) {
         return 1;
     }
@@ -523,16 +533,16 @@ int main(int argc, char* argv[]) {
     for (const User& user : users) initialTotal += user.balance;
     for (const User& user : validation.finalUsers) finalTotal += user.balance;
 
-    cout << "\nUsers: " << users.size()
-         << "\nGenerated transactions: " << transactions.size()
-         << "\nAccepted transactions: " << validation.accepted.size()
-         << "\nRejected transactions: " << validation.rejected.size()
-         << "\nInitial total: " << initialTotal
-         << "\nFinal total: " << finalTotal
-         << "\nBlocks including genesis: " << chain.size()
-         << "\nDifficulty: " << difficulty
-         << "\nBlockchain valid: "
-         << (VerifyBlockchainV03(chain) ? "YES" : "NO") << '\n';
+    cout << "\nVartotojų: " << users.size()
+         << "\nSugeneruotų transakcijų: " << transactions.size()
+         << "\nPriimtų transakcijų: " << validation.accepted.size()
+         << "\nAtmestų transakcijų: " << validation.rejected.size()
+         << "\nPradinė suma: " << initialTotal
+         << "\nGalutinė suma: " << finalTotal
+         << "\nBlokų, įskaitant pradinį bloką: " << chain.size()
+         << "\nSudėtingumas: " << difficulty
+         << "\nBlokų grandinė galiojanti: "
+         << (VerifyBlockchainV03(chain) ? "TAIP" : "NE") << '\n';
 
     return initialTotal == finalTotal && VerifyBlockchainV03(chain) ? 0 : 1;
 }

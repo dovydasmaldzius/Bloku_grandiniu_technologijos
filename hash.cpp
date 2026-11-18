@@ -1,7 +1,6 @@
-#include "hash.h"
-
 #include <iomanip>
 #include <sstream>
+#include "hash.h"
 
 using namespace std;
 
@@ -9,7 +8,7 @@ void HashFunkcija(const string& zodis, uint32_t hash[8]) {
 
 const uint32_t daugikliai[8] = {31, 37, 41, 43, 47, 53, 59, 61};
 
-for (int i = 0; i < zodis.length(); i++) {
+for (string::size_type i = 0; i < zodis.length(); i++) {
 uint32_t simbolis = static_cast<unsigned char>(zodis[i]);
 
 for (int j = 0; j < 8; j++) {
