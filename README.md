@@ -101,4 +101,6 @@ Papildoma užduotis: Lygiagretus kasimas.
 
 Užduoties tikslas: 
 
+<img width="865" height="133" alt="image" src="https://github.com/user-attachments/assets/85c87f05-1bfb-4048-b61a-a03b86e95e8c" />
 
+Kaip matome, beveik 4 kartus padidėjo užduoties efektyvumas.
