@@ -63,7 +63,12 @@ Galutinė suvestinė:
 Galutinė pinigų suma nepasikeitė, nes nėra papildomai skaičiuojama komisinių ar kasimo atlygiai.
 
 v0.2 užduotis:
+
 Užduoties tikslas: papildyti pirmąją darbo dalį (v0.1) merkle medžiu ir validavimo testais. Šiai užduočiai buvo sukurti papildomi failai merkle.h, merkle.cpp ir main2.cpp.
+
+Merkle medžio įgyvendinimas:
+
+<img width="1132" height="525" alt="image" src="https://github.com/user-attachments/assets/d74bd8c7-bb45-4ec0-9e84-6f95006ab5bd" />
 
 Šioje užduotyje atlikti transakcijų validavimo testai:
 
