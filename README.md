@@ -117,14 +117,31 @@ v0.3 užduotis:
 Pagrindiniai DI patobulinimai šioje užduotyje:
 
 1) Įvestos konkrečios transakcijos atmetimo priežastys:
+
+<img width="591" height="853" alt="image" src="https://github.com/user-attachments/assets/99b2b120-31ba-4dcf-9ae1-4efff8a2ecf0" />
+
 2) Pagerintas Merkle medžio saugumas:
+
+<img width="552" height="65" alt="image" src="https://github.com/user-attachments/assets/4fe23f28-05a7-4ae7-90c8-e5fda2634018" />
+<img width="665" height="126" alt="image" src="https://github.com/user-attachments/assets/b988ae16-7448-4c1e-aa14-f57055c205b3" />
+<img width="500" height="88" alt="image" src="https://github.com/user-attachments/assets/bd8f57e8-679f-4461-ab1c-5b2781f4f67f" />
+<img width="855" height="62" alt="image" src="https://github.com/user-attachments/assets/8d96600a-1b4f-484a-aeef-af6ca1db010c" />
+
 3) Difficulity (kasimo sunkumo) patikra:
+
+<img width="680" height="83" alt="image" src="https://github.com/user-attachments/assets/749833df-3882-4d33-9645-c37128fe427e" />
+<img width="480" height="103" alt="image" src="https://github.com/user-attachments/assets/3eab7bdd-6ba8-491f-b32d-cd930f25293f" />
 
 Papildoma užduotis: Lygiagretus kasimas.
 
 Šiai užduočiai papildomai buvo sukurtas kodas lygiagretus_kasimas.cpp.
 
-Užduoties tikslas: kandidatų kasimą (v0.2 užduotyje) pakeisti iš nuoseklaus į lygiagretų.
+Užduoties tikslas: kandidatų kasimą (v0.2 užduotyje) pakeisti iš nuoseklaus į lygiagretų (v0.2 užduotyje kandidatai buvo tikrinami nuosekliai, tai yra, po vieną, o šioje užduotyje kiekvienam kandidatui yra sukuriama atskira gija ir visi kandidatai yra tikrinami vienu metu).
 
-<img width="1007" height="155" alt="image" src="https://github.com/user-attachments/assets/f2cd3e2a-8f34-4253-9723-05293eb23ad5" />
+Pastaba: kandidatų įtraukimui (susiejimui) į kodą buvo naudojama DI pagalba ("ChatGPT ir Google "Gemini")
 
+<img width="1007" height="150" alt="image" src="https://github.com/user-attachments/assets/0b3b03c3-aeb3-4651-82fa-536f82eba4c6" />
+
+Kaip matome, laimėjo 5-asis kandidatas, nes jis pirmasis surado PoW iš visų 5 kandidatų, todėl ir buvo pasirinktas (pirmieji 4 kandidatai nerado tinkamo nonce per tam tikrą laiko vienetą).
+
+Pastaba - darbas buvo atliktas su kasimo sudėtingumu 1, užduoties supaprastinimui ir greičiui.
